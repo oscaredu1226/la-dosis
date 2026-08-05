@@ -1,5 +1,6 @@
 import {
   BandMember,
+  DownloadLink,
   GalleryImage,
   NavItem,
   PlatformLink,
@@ -11,9 +12,11 @@ import {
 export const NAV_ITEMS: readonly NavItem[] = [
   { label: 'Inicio', fragment: 'inicio' },
   { label: 'Música', fragment: 'musica' },
+  { label: 'Descargas', fragment: 'descargas' },
   { label: 'La banda', fragment: 'banda' },
   { label: 'Videos', fragment: 'videos' },
-  { label: 'Galería', fragment: 'galeria' }
+  { label: 'Galería', fragment: 'galeria' },
+  { label: 'Foro', fragment: 'foro' }
 ];
 
 export const SOCIAL_LINKS: readonly SocialLink[] = [
@@ -62,6 +65,24 @@ export const MUSIC_PLATFORMS: readonly PlatformLink[] = [
     platform: 'tiktok',
     className: 'platform platform--tiktok',
     url: 'https://www.tiktok.com/@ladosispunk'
+  }
+];
+
+export const DOWNLOAD_LINKS: readonly DownloadLink[] = [
+  {
+    title: 'AUTOAYUDA 2007',
+    description: 'Álbum oficial de 4 tracks disponible para escuchar y descargar en Samply.',
+    url: 'https://samply.app/p/6bAq0mmWDvo19k40GAvp'
+  },
+  {
+    title: 'LADOSIS',
+    description: 'Álbum oficial de 6 tracks disponible para escuchar y descargar en Samply.',
+    url: 'https://samply.app/p/8t0NqEVTFklIqGqSrpeo'
+  },
+  {
+    title: 'Intitulado',
+    description: 'Álbum oficial de 5 tracks disponible para escuchar y descargar en Samply.',
+    url: 'https://samply.app/p/2mLNeHSqgVEhK2g8Ragk'
   }
 ];
 
