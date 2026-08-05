@@ -1,0 +1,52 @@
+<section class="gallery section-dark" id="galeria" data-section>
+  <div class="container">
+    <div class="gallery__header reveal">
+      <div class="section-title">
+        <h2>Galería</h2>
+      </div>
+    </div>
+
+    <div class="gallery-carousel reveal" aria-label="Carrusel de fotos de La Dosis">
+      <button
+        class="gallery-control gallery-control--prev"
+        type="button"
+        aria-label="Ver fotos anteriores"
+        (click)="scrollGallery(-1)"
+      >
+        ‹
+      </button>
+
+      <div
+        #galleryTrack
+        class="gallery__grid"
+        (pointerdown)="stopGalleryAuto()"
+        (focusin)="stopGalleryAuto()"
+      >
+        @for (image of images; track image.fullUrl; let index = $index) {
+          <button
+            class="gallery-item reveal"
+            type="button"
+            (click)="openImage(index)"
+          >
+            <img
+              [src]="image.fullUrl"
+              [alt]="image.alt"
+              width="320"
+              height="200"
+              loading="lazy"
+            />
+          </button>
+        }
+      </div>
+
+      <button
+        class="gallery-control gallery-control--next"
+        type="button"
+        aria-label="Ver más fotos"
+        (click)="scrollGallery(1)"
+      >
+        ›
+      </button>
+    </div>
+  </div>
+</section>
