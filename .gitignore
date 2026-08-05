@@ -10,6 +10,18 @@
 /node_modules
 npm-debug.log
 yarn-error.log
+ng-serve*.log
+
+# Environment variables and Supabase secrets
+.env
+.env.*
+!.env.example
+!.env.local.example
+!.env.production.example
+supabase/.temp/
+supabase/.branches/
+supabase/.env
+supabase/.env.*
 
 # IDEs and editors
 .idea/
