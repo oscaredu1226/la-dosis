@@ -1,0 +1,54 @@
+<main class="not-found">
+  <img
+    class="not-found__backdrop"
+    src="/assets/images/hero-la-dosis-1280.jpg"
+    srcset="
+      /assets/images/hero-la-dosis-768.jpg 768w,
+      /assets/images/hero-la-dosis-1280.jpg 1280w,
+      /assets/images/hero-la-dosis-1672.jpg 1672w
+    "
+    sizes="100vw"
+    alt=""
+    aria-hidden="true"
+  />
+
+  <div class="not-found__shade" aria-hidden="true"></div>
+  <div class="not-found__noise" aria-hidden="true"></div>
+
+  <header class="not-found__header">
+    <a routerLink="/" aria-label="Volver al inicio de La Dosis">
+      <img
+        src="/assets/images/logo-la-dosis.webp"
+        width="600"
+        height="302"
+        alt="La Dosis"
+      />
+    </a>
+    <span>Error de ruta</span>
+  </header>
+
+  <section class="not-found__content" aria-labelledby="not-found-title">
+    <p class="not-found__eyebrow">Error 404 / Fuera de ruta</p>
+    <h1 id="not-found-title">
+      <strong>404</strong>
+      Esta página se fue al pogo
+    </h1>
+    <p class="not-found__copy">
+      El enlace ya no existe o terminó en otro escenario. Regresa al inicio y
+      sigue haciendo ruido con La Dosis.
+    </p>
+
+    <div class="not-found__actions">
+      <a class="not-found__primary" routerLink="/">
+        <span aria-hidden="true">&#8592;</span>
+        Volver al inicio
+      </a>
+      <a class="not-found__secondary" href="/#musica">Escuchar música</a>
+    </div>
+  </section>
+
+  <footer class="not-found__footer">
+    <span>La Dosis</span>
+    <span>Lima, Perú</span>
+  </footer>
+</main>
