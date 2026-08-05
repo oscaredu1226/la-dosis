@@ -1,0 +1,42 @@
+<section id="descargas" class="downloads section-dark" data-section>
+  <div class="container">
+    <div class="downloads__header reveal">
+      <div class="section-title">
+        <h2>Descarga nuestros <span>álbumes</span></h2>
+      </div>
+
+      <p>
+        Escucha y descarga los álbumes oficiales compartidos por La Dosis desde
+        Samply.
+      </p>
+    </div>
+
+    <div class="downloads__grid">
+      @for (download of downloads; track download.url; let index = $index) {
+        <a
+          class="download-card reveal"
+          [href]="download.url"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="download-card__number">0{{ index + 1 }}</span>
+
+          <span class="download-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 3v11" />
+              <path d="m7 10 5 5 5-5" />
+              <path d="M5 19h14" />
+            </svg>
+          </span>
+
+          <span class="download-card__copy">
+            <strong>{{ download.title }}</strong>
+            <span>{{ download.description }}</span>
+          </span>
+
+          <span class="download-card__action">Descargar</span>
+        </a>
+      }
+    </div>
+  </div>
+</section>
