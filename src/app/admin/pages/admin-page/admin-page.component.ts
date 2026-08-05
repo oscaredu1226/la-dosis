@@ -11,13 +11,18 @@ import {
   LandingContentStore
 } from '../../../landing/application/landing-content.store';
 import {
-  DownloadLink,
   EditableLandingContent,
   GalleryImage,
   Release,
   ShowEvent,
   VideoItem
 } from '../../../landing/domain/landing.models';
+import {
+  IMAGE_COMPRESSOR,
+  ImageCompressionOptions,
+  ImageCompressor
+} from '../../../shared/application/image-compressor';
+import { BrowserImageCompressorService } from '../../../shared/infrastructure/browser-image-compressor.service';
 
 type AdminPanel =
   | 'overview'
@@ -34,9 +39,31 @@ interface AdminNavItem {
   readonly hint: string;
 }
 
+type EditableImageProperty =
+  | 'coverUrl'
+  | 'stickerUrl'
+  | 'imageUrl'
+  | 'fullUrl';
+
+const IMAGE_COMPRESSION_PRESETS: Record<
+  EditableImageProperty,
+  ImageCompressionOptions
+> = {
+  coverUrl: { maxWidth: 1200, maxHeight: 1200, maxBytes: 350 * 1024 },
+  stickerUrl: { maxWidth: 900, maxHeight: 1100, maxBytes: 300 * 1024 },
+  imageUrl: { maxWidth: 1400, maxHeight: 1800, maxBytes: 450 * 1024 },
+  fullUrl: { maxWidth: 1600, maxHeight: 1600, maxBytes: 450 * 1024 }
+};
+
 @Component({
   selector: 'app-admin-page',
   imports: [DatePipe, FormsModule],
+  providers: [
+    {
+      provide: IMAGE_COMPRESSOR,
+      useClass: BrowserImageCompressorService
+    }
+  ],
   host: { class: 'admin-shell' },
   templateUrl: './admin-page.component.html',
   styleUrl: './admin-page.component.css'
@@ -46,12 +73,16 @@ export class AdminPageComponent {
   private readonly communityRepository = inject<CommunityBoardRepository>(
     COMMUNITY_BOARD_REPOSITORY
   );
+  private readonly imageCompressor = inject<ImageCompressor>(IMAGE_COMPRESSOR);
   private readonly authStorageKey = 'la-dosis-admin-session';
 
   protected draft = this.cloneContent(this.contentStore.content());
   protected readonly comments = signal<readonly CommunityComment[]>([]);
   protected readonly savedMessage = signal('');
   protected readonly loginError = signal('');
+  protected readonly compressionMessage = signal('');
+  protected readonly compressionError = signal('');
+  protected readonly isCompressing = signal(false);
   protected readonly activePanel = signal<AdminPanel>('overview');
   protected readonly isAuthenticated = signal(
     localStorage.getItem(this.authStorageKey) === 'true'
@@ -123,6 +154,10 @@ export class AdminPageComponent {
   }
 
   protected save(): void {
+    if (this.isCompressing()) {
+      return;
+    }
+
     this.contentStore.updateContent(this.cloneContent(this.draft));
     this.savedMessage.set('Cambios guardados en este navegador.');
   }
@@ -212,7 +247,7 @@ export class AdminPageComponent {
   protected async setImageFromFile(
     event: Event,
     target: Release | ShowEvent | GalleryImage,
-    property: 'coverUrl' | 'stickerUrl' | 'imageUrl' | 'fullUrl'
+    property: EditableImageProperty
   ): Promise<void> {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
@@ -221,8 +256,28 @@ export class AdminPageComponent {
       return;
     }
 
-    (target as unknown as Record<string, string>)[property] =
-      await this.readFileAsDataUrl(file);
+    this.compressionMessage.set('Optimizando imagen...');
+    this.compressionError.set('');
+    this.isCompressing.set(true);
+
+    try {
+      const result = await this.imageCompressor.compress(
+        file,
+        IMAGE_COMPRESSION_PRESETS[property]
+      );
+      (target as unknown as Record<string, string>)[property] = result.dataUrl;
+      this.compressionMessage.set(this.compressionSummary(result));
+    } catch (error: unknown) {
+      this.compressionMessage.set('');
+      this.compressionError.set(
+        error instanceof Error
+          ? error.message
+          : 'No se pudo optimizar la imagen seleccionada.'
+      );
+    } finally {
+      this.isCompressing.set(false);
+      input.value = '';
+    }
   }
 
   protected async setVideoFromFile(event: Event, video: VideoItem): Promise<void> {
@@ -265,6 +320,28 @@ export class AdminPageComponent {
       reader.onerror = () => reject(reader.error);
       reader.readAsDataURL(file);
     });
+  }
+
+  private compressionSummary(result: {
+    originalBytes: number;
+    compressedBytes: number;
+    width: number;
+    height: number;
+  }): string {
+    const savedPercent = Math.max(
+      0,
+      Math.round((1 - result.compressedBytes / result.originalBytes) * 100)
+    );
+
+    return `Imagen optimizada: ${this.formatBytes(result.originalBytes)} -> ${this.formatBytes(result.compressedBytes)} (${savedPercent}% menos, ${result.width} x ${result.height}px).`;
+  }
+
+  private formatBytes(bytes: number): string {
+    if (bytes < 1024 * 1024) {
+      return `${Math.max(1, Math.round(bytes / 1024))} KB`;
+    }
+
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   }
 
   private cloneContent(content: EditableLandingContent): EditableLandingContent {

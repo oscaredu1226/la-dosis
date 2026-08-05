@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { AdminPageComponent } from './admin/pages/admin-page/admin-page.component';
 import { LandingPageComponent } from './landing/pages/landing-page/landing-page.component';
 
 export const routes: Routes = [
@@ -9,7 +8,10 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    component: AdminPageComponent
+    loadComponent: () =>
+      import('./admin/pages/admin-page/admin-page.component').then(
+        ({ AdminPageComponent }) => AdminPageComponent
+      )
   },
   {
     path: '**',
