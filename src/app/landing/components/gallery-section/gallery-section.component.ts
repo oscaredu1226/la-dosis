@@ -5,9 +5,11 @@ import {
   EventEmitter,
   OnDestroy,
   Output,
-  ViewChild
+  ViewChild,
+  computed,
+  inject
 } from '@angular/core';
-import { GALLERY_IMAGES } from '../../data/landing-content';
+import { LandingContentStore } from '../../application/landing-content.store';
 
 @Component({
   selector: 'app-gallery-section',
@@ -18,7 +20,8 @@ export class GallerySectionComponent implements AfterViewInit, OnDestroy {
   @Output() readonly imageSelected = new EventEmitter<number>();
   @ViewChild('galleryTrack') private galleryTrack?: ElementRef<HTMLElement>;
 
-  protected readonly images = GALLERY_IMAGES;
+  private readonly contentStore = inject(LandingContentStore);
+  protected readonly images = computed(() => this.contentStore.content().gallery);
   private galleryAutoTimer = 0;
 
   ngAfterViewInit(): void {

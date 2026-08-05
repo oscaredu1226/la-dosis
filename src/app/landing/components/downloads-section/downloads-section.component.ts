@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { DOWNLOAD_LINKS } from '../../data/landing-content';
+import { Component, computed, inject } from '@angular/core';
+import { LandingContentStore } from '../../application/landing-content.store';
 
 @Component({
   selector: 'app-downloads-section',
@@ -7,5 +7,6 @@ import { DOWNLOAD_LINKS } from '../../data/landing-content';
   styleUrl: './downloads-section.component.css'
 })
 export class DownloadsSectionComponent {
-  protected readonly downloads = DOWNLOAD_LINKS;
+  private readonly contentStore = inject(LandingContentStore);
+  protected readonly downloads = computed(() => this.contentStore.content().downloads);
 }

@@ -22,7 +22,7 @@
         (pointerdown)="stopGalleryAuto()"
         (focusin)="stopGalleryAuto()"
       >
-        @for (image of images; track image.fullUrl; let index = $index) {
+        @for (image of images(); track image.fullUrl; let index = $index) {
           <button
             class="gallery-item reveal"
             type="button"

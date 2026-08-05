@@ -12,7 +12,7 @@
     </div>
 
     <div class="downloads__grid">
-      @for (download of downloads; track download.url; let index = $index) {
+      @for (download of downloads(); track download.url; let index = $index) {
         <a
           class="download-card reveal"
           [href]="download.url"

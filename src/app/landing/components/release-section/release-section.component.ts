@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { LATEST_RELEASE } from '../../data/landing-content';
+import { Component, computed, inject } from '@angular/core';
+import { LandingContentStore } from '../../application/landing-content.store';
 
 @Component({
   selector: 'app-release-section',
@@ -7,5 +7,6 @@ import { LATEST_RELEASE } from '../../data/landing-content';
   styleUrl: './release-section.component.css'
 })
 export class ReleaseSectionComponent {
-  protected readonly release = LATEST_RELEASE;
+  private readonly contentStore = inject(LandingContentStore);
+  protected readonly release = computed(() => this.contentStore.content().release);
 }

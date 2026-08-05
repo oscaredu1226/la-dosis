@@ -6,14 +6,18 @@
 
     <div class="videos__grid">
       <div class="video-frame reveal">
-        <iframe
-          [title]="selectedVideo().title"
-          [src]="selectedVideoUrl()"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
+        @if (isVideoFile(selectedVideo())) {
+          <video [src]="selectedVideo().embedUrl" controls playsinline></video>
+        } @else {
+          <iframe
+            [title]="selectedVideo().title"
+            [src]="selectedVideoUrl()"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        }
       </div>
 
       <aside class="video-sidebar reveal">
@@ -33,7 +37,7 @@
         <h4>Más videos</h4>
 
         <div class="video-thumbs" role="list" aria-label="Videos adicionales">
-          @for (video of videos; track video.id) {
+          @for (video of videos(); track video.id) {
             <button
               class="video-thumb"
               [class.is-active]="video.id === selectedVideo().id"

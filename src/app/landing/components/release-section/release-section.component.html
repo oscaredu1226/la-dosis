@@ -8,14 +8,14 @@
       <div class="release__cover tape reveal">
         <a
           class="release__cover-link"
-          [href]="release.spotifyUrl"
+          [href]="release().spotifyUrl"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Escuchar RECUERDO@S en Spotify"
         >
           <img
-            [src]="release.coverUrl"
-            [alt]="release.coverAlt"
+            [src]="release().coverUrl"
+            [alt]="release().coverAlt"
             width="600"
             height="600"
             loading="lazy"
@@ -24,19 +24,19 @@
       </div>
 
       <div class="release__copy reveal">
-        <p class="eyebrow eyebrow--red">{{ release.eyebrow }}</p>
-        <h3>{{ release.title }}</h3>
-        <p>{{ release.description }}</p>
+        <p class="eyebrow eyebrow--red">{{ release().eyebrow }}</p>
+        <h3>{{ release().title }}</h3>
+        <p>{{ release().description }}</p>
 
         <div class="release__meta">
-          <span>{{ release.date }}</span>
-          <span>{{ release.duration }}</span>
+          <span>{{ release().date }}</span>
+          <span>{{ release().duration }}</span>
         </div>
 
         <div class="release__actions">
           <a
             class="button button--primary"
-            [href]="release.spotifyUrl"
+            [href]="release().spotifyUrl"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -53,8 +53,8 @@
 
       <img
         class="punk-sticker reveal"
-        [src]="release.stickerUrl"
-        [alt]="release.stickerAlt"
+        [src]="release().stickerUrl"
+        [alt]="release().stickerAlt"
         width="999"
         height="1170"
         loading="lazy"
