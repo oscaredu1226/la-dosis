@@ -1,0 +1,64 @@
+<section class="release" id="lanzamiento" aria-labelledby="release-section-title">
+  <div class="container">
+    <div class="release__heading section-title reveal">
+      <h2 id="release-section-title">Último lanzamiento</h2>
+    </div>
+
+    <div class="release__grid">
+      <div class="release__cover tape reveal">
+        <a
+          class="release__cover-link"
+          [href]="release.spotifyUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Escuchar RECUERDO@S en Spotify"
+        >
+          <img
+            [src]="release.coverUrl"
+            [alt]="release.coverAlt"
+            width="600"
+            height="600"
+            loading="lazy"
+          />
+        </a>
+      </div>
+
+      <div class="release__copy reveal">
+        <p class="eyebrow eyebrow--red">{{ release.eyebrow }}</p>
+        <h3>{{ release.title }}</h3>
+        <p>{{ release.description }}</p>
+
+        <div class="release__meta">
+          <span>{{ release.date }}</span>
+          <span>{{ release.duration }}</span>
+        </div>
+
+        <div class="release__actions">
+          <a
+            class="button button--primary"
+            [href]="release.spotifyUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg class="button__icon" aria-hidden="true" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="9" />
+              <path
+                d="M7.6 9.6c3.3-1 6.5-.7 9.4.8M8.2 12.4c2.6-.7 5-.5 7.4.7M8.8 15c1.9-.5 3.8-.3 5.6.5"
+              />
+            </svg>
+            Escuchar ahora
+          </a>
+        </div>
+      </div>
+
+      <img
+        class="punk-sticker reveal"
+        [src]="release.stickerUrl"
+        [alt]="release.stickerAlt"
+        width="999"
+        height="1170"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
