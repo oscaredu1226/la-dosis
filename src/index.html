@@ -20,6 +20,7 @@
   <link rel="canonical" href="https://www.ladosisoficial.com/">
   <link rel="alternate" hreflang="es-PE" href="https://www.ladosisoficial.com/">
   <link rel="alternate" hreflang="x-default" href="https://www.ladosisoficial.com/">
+  <link rel="preload" as="image" href="/assets/images/logo-la-dosis.webp" type="image/webp">
   <meta property="og:locale" content="es_PE">
   <meta property="og:site_name" content="La Dosis">
   <meta property="og:title" content="La Dosis | Punk melódico peruano">
@@ -91,8 +92,19 @@
       ]
     }
   </script>
+  <style>
+    .boot-loader{position:fixed;inset:0;z-index:5000;display:grid;place-items:center;padding:24px;color:#eee9df;background:#030303}.boot-loader__content{width:min(78vw,330px);display:grid;justify-items:center}.boot-loader img{width:min(66vw,220px);height:auto}.boot-loader p{margin:22px 0 12px;font:900 .86rem/1.2 "Arial Narrow",Arial,sans-serif;text-transform:uppercase}.boot-loader__track{position:relative;width:100%;height:12px;overflow:hidden;background:rgb(238 233 223/.12);border:2px solid rgb(238 233 223/.54)}.boot-loader__track span{position:absolute;inset:0;width:46%;background:#e73233;animation:boot-progress 900ms ease-in-out infinite}@keyframes boot-progress{from{transform:translateX(-110%)}to{transform:translateX(230%)}}@media(prefers-reduced-motion:reduce){.boot-loader__track span{width:72%;animation:none}}
+  </style>
 </head>
 <body>
-  <app-root></app-root>
+  <app-root>
+    <div class="boot-loader" role="status" aria-label="Cargando el sitio de La Dosis">
+      <div class="boot-loader__content">
+        <img src="/assets/images/logo-la-dosis.webp" width="600" height="302" alt="La Dosis">
+        <p>Preparando el pogo</p>
+        <div class="boot-loader__track" role="progressbar" aria-label="Cargando contenido"><span></span></div>
+      </div>
+    </div>
+  </app-root>
 </body>
 </html>

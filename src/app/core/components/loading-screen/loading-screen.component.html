@@ -1,0 +1,26 @@
+<div
+  class="loading-screen"
+  [class.is-leaving]="leaving()"
+  role="status"
+  aria-live="polite"
+  aria-label="Cargando el sitio de La Dosis"
+>
+  <div class="loading-screen__content">
+    <img
+      src="/assets/images/logo-la-dosis.webp"
+      width="600"
+      height="302"
+      alt="La Dosis"
+    />
+
+    <p>Preparando el pogo</p>
+
+    <div
+      class="loading-screen__track"
+      role="progressbar"
+      aria-label="Cargando contenido"
+    >
+      <span></span>
+    </div>
+  </div>
+</div>

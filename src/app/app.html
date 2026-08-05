@@ -1,1 +1,5 @@
+@if (loadingState() !== 'hidden') {
+  <app-loading-screen [leaving]="loadingState() === 'leaving'" />
+}
+
 <router-outlet />
