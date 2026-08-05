@@ -1,0 +1,457 @@
+<link rel="stylesheet" href="/assets/styles/admin-page.css" />
+
+@if (!isAuthenticated()) {
+  <main class="login-screen">
+    <section class="login-visual" aria-label="La Dosis backstage">
+      <img class="login-logo" src="/assets/images/logo-la-dosis.png" alt="La Dosis" />
+      <div class="login-visual__copy">
+        <p class="eyebrow">Backstage digital</p>
+        <h1>Todo el ruido.<br /><span>Bajo control.</span></h1>
+        <p>Gestiona lanzamientos, fechas, videos y comunidad desde un solo lugar.</p>
+      </div>
+      <span class="login-visual__stamp">Panel oficial</span>
+    </section>
+
+    <section class="login-panel">
+      <div class="login-card">
+        <header class="login-card__header">
+          <span class="login-card__mark">LD</span>
+          <div>
+            <p class="eyebrow">Acceso privado</p>
+            <h2>Bienvenido</h2>
+          </div>
+        </header>
+
+        <p class="login-copy">Ingresa tus credenciales para administrar el sitio oficial de La Dosis.</p>
+
+        <form (ngSubmit)="login()">
+          <label>
+            <span>Usuario</span>
+            <input
+              name="username"
+              type="text"
+              autocomplete="username"
+              [(ngModel)]="username"
+              placeholder="Ingresa tu usuario"
+            />
+          </label>
+
+          <label>
+            <span>Contrasena</span>
+            <input
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              [(ngModel)]="password"
+              placeholder="Ingresa tu contrasena"
+            />
+          </label>
+
+          @if (loginError()) {
+            <p class="error">{{ loginError() }}</p>
+          }
+
+          <button class="login-submit" type="submit">
+            Entrar al dashboard
+            <span aria-hidden="true">-&gt;</span>
+          </button>
+        </form>
+
+        <p class="login-foot">Administracion local <span></span> Preparado para Supabase</p>
+      </div>
+    </section>
+  </main>
+} @else {
+  <main class="dashboard">
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="Ir al sitio de La Dosis">
+        <img src="/assets/images/logo-la-dosis.png" alt="La Dosis" />
+        <div>
+          <strong>Control room</strong>
+          <span>Panel oficial</span>
+        </div>
+      </a>
+
+      <div class="sidebar-label">Gestion del sitio</div>
+
+      <nav class="side-nav" aria-label="Secciones del administrador">
+        @for (item of navItems; track item.id; let index = $index) {
+          <button
+            type="button"
+            [class.active]="activePanel() === item.id"
+            (click)="selectPanel(item.id)"
+          >
+            <span class="nav-index">{{ index + 1 < 10 ? '0' + (index + 1) : index + 1 }}</span>
+            <span class="nav-copy">
+              <strong>{{ item.label }}</strong>
+              <small>{{ item.hint }}</small>
+            </span>
+            <span class="nav-arrow" aria-hidden="true">&rsaquo;</span>
+          </button>
+        }
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="admin-profile">
+          <span class="admin-avatar">LD</span>
+          <div>
+            <strong>La Dosis</strong>
+            <span>Administrador</span>
+          </div>
+        </div>
+        <button type="button" class="logout" (click)="logout()">Cerrar sesion</button>
+      </div>
+    </aside>
+
+    <section class="workspace">
+      <header class="topbar">
+        <div class="topbar-copy">
+          <p class="eyebrow">Backstage / {{ activeTitle() }}</p>
+          <h1>{{ activeTitle() }}</h1>
+          <p>{{ activeDescription() }}</p>
+        </div>
+
+        <div class="actions">
+          <a class="action-secondary" href="/" target="_blank">Ver sitio</a>
+          <button type="button" class="action-secondary" (click)="reset()">Restaurar</button>
+          <button type="button" class="action-primary" (click)="save()">Guardar cambios</button>
+        </div>
+      </header>
+
+      @if (savedMessage()) {
+        <p class="save-message"><span aria-hidden="true">&#10003;</span> {{ savedMessage() }}</p>
+      }
+
+      <div class="work-grid">
+        <section class="editor-panel">
+          @switch (activePanel()) {
+            @case ('overview') {
+              <div class="overview-banner">
+                <img src="/assets/images/hero-la-dosis.png" alt="La Dosis" />
+                <div class="overview-banner__shade"></div>
+                <div class="overview-banner__content">
+                  <span class="status-pill"><i></i> Sitio operativo</span>
+                  <p class="eyebrow">Centro de control</p>
+                  <h2>La web esta lista<br />para hacer ruido.</h2>
+                  <p>Administra el contenido que ve tu comunidad y revisa cada cambio antes de publicarlo.</p>
+                </div>
+              </div>
+
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow">Resumen del contenido</p>
+                  <h2>Estado de la landing</h2>
+                </div>
+                <span class="last-update">Datos guardados en este navegador</span>
+              </div>
+
+              <div class="metric-grid">
+                <button type="button" (click)="selectPanel('downloads')">
+                  <span class="metric-top"><i>AL</i><small>Ver detalle</small></span>
+                  <strong>{{ draft.downloads.length }}</strong>
+                  <span>Albumes publicados</span>
+                </button>
+                <button type="button" (click)="selectPanel('videos')">
+                  <span class="metric-top"><i>VD</i><small>Ver detalle</small></span>
+                  <strong>{{ draft.videos.length }}</strong>
+                  <span>Videos activos</span>
+                </button>
+                <button type="button" (click)="selectPanel('shows')">
+                  <span class="metric-top"><i>PG</i><small>Ver detalle</small></span>
+                  <strong>{{ draft.shows.length }}</strong>
+                  <span>Fechas y flyers</span>
+                </button>
+                <button type="button" (click)="selectPanel('forum')">
+                  <span class="metric-top"><i>FR</i><small>Ver detalle</small></span>
+                  <strong>{{ comments().length }}</strong>
+                  <span>Comentarios del foro</span>
+                </button>
+              </div>
+
+              <div class="overview-bottom">
+                <article class="content-health">
+                  <div class="panel-head">
+                    <div>
+                      <p class="eyebrow">Contenido</p>
+                      <h2>Secciones administrables</h2>
+                    </div>
+                    <span>{{ navItems.length - 1 }} modulos</span>
+                  </div>
+                  <div class="health-list">
+                    <button type="button" (click)="selectPanel('release')"><span>Ultimo lanzamiento</span><b>Listo</b></button>
+                    <button type="button" (click)="selectPanel('gallery')"><span>Galeria oficial</span><b>{{ draft.gallery.length }} fotos</b></button>
+                    <button type="button" (click)="selectPanel('forum')"><span>Comunidad</span><b>{{ comments().length }} mensajes</b></button>
+                  </div>
+                </article>
+
+                <article class="fixed-content">
+                  <p class="eyebrow">Contenido protegido</p>
+                  <h2>Identidad de la banda</h2>
+                  <p>El hero y la seccion de integrantes permanecen fijos para conservar la identidad visual del sitio.</p>
+                  <a href="/" target="_blank">Revisar landing <span aria-hidden="true">-&gt;</span></a>
+                </article>
+              </div>
+            }
+
+            @case ('release') {
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Home / Lanzamiento</p>
+                  <h2>Ultimo lanzamiento</h2>
+                  <p>Actualiza la portada, los datos y el enlace principal del lanzamiento destacado.</p>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <label><span>Titulo</span><input [(ngModel)]="draft.release.title" /></label>
+                <label><span>Etiqueta</span><input [(ngModel)]="draft.release.eyebrow" /></label>
+                <label><span>Fecha</span><input [(ngModel)]="draft.release.date" /></label>
+                <label><span>Duracion</span><input [(ngModel)]="draft.release.duration" /></label>
+                <label class="wide"><span>Descripcion</span><textarea rows="4" [(ngModel)]="draft.release.description"></textarea></label>
+                <label class="wide"><span>Spotify URL</span><input [(ngModel)]="draft.release.spotifyUrl" /></label>
+                <label><span>Cover URL</span><input [(ngModel)]="draft.release.coverUrl" /></label>
+                <label class="file-field"><span>Subir cover</span><input type="file" accept="image/*" (change)="setImageFromFile($event, draft.release, 'coverUrl')" /></label>
+                <label><span>Sticker URL</span><input [(ngModel)]="draft.release.stickerUrl" /></label>
+                <label class="file-field"><span>Subir sticker</span><input type="file" accept="image/*" (change)="setImageFromFile($event, draft.release, 'stickerUrl')" /></label>
+              </div>
+            }
+
+            @case ('downloads') {
+              <div class="panel-head with-action">
+                <div>
+                  <p class="eyebrow">Biblioteca / Samply</p>
+                  <h2>Albumes descargables</h2>
+                  <p>Edita los discos que la comunidad puede escuchar y descargar.</p>
+                </div>
+                <button type="button" class="add-button" (click)="addDownload()">+ Agregar album</button>
+              </div>
+
+              @for (download of draft.downloads; track $index; let index = $index) {
+                <article class="repeat-card">
+                  <header class="repeat-card__head">
+                    <div><span>{{ index + 1 < 10 ? '0' + (index + 1) : index + 1 }}</span><strong>{{ download.title || 'Album sin titulo' }}</strong></div>
+                    <button type="button" class="danger" (click)="removeDownload(index)">Quitar</button>
+                  </header>
+                  <div class="form-grid">
+                    <label><span>Titulo</span><input [(ngModel)]="download.title" /></label>
+                    <label><span>Link Samply</span><input [(ngModel)]="download.url" /></label>
+                    <label class="wide"><span>Descripcion</span><textarea rows="3" [(ngModel)]="download.description"></textarea></label>
+                  </div>
+                </article>
+              }
+            }
+
+            @case ('videos') {
+              <div class="panel-head with-action">
+                <div>
+                  <p class="eyebrow">Media / Videos</p>
+                  <h2>Videos oficiales</h2>
+                  <p>Administra clips de YouTube o archivos de video directos.</p>
+                </div>
+                <button type="button" class="add-button" (click)="addVideo()">+ Agregar video</button>
+              </div>
+
+              @for (video of draft.videos; track video.id; let index = $index) {
+                <article class="repeat-card">
+                  <header class="repeat-card__head">
+                    <div><span>{{ index + 1 < 10 ? '0' + (index + 1) : index + 1 }}</span><strong>{{ video.title || 'Video sin titulo' }}</strong></div>
+                    <button type="button" class="danger" [disabled]="draft.videos.length <= 1" (click)="removeVideo(index)">Quitar</button>
+                  </header>
+                  <div class="form-grid">
+                    <label><span>Titulo</span><input [(ngModel)]="video.title" /></label>
+                    <label><span>Etiqueta</span><input [(ngModel)]="video.label" /></label>
+                    <label><span>Tipo</span>
+                      <select [(ngModel)]="video.mediaType">
+                        <option value="youtube">YouTube</option>
+                        <option value="video">Video directo</option>
+                      </select>
+                    </label>
+                    <label><span>URL video / embed</span><input [(ngModel)]="video.embedUrl" /></label>
+                    <label><span>URL publica de YouTube</span><input [(ngModel)]="video.youtubeUrl" /></label>
+                    <label><span>Miniatura URL</span><input [(ngModel)]="video.thumbnailUrl" /></label>
+                    <label class="file-field wide"><span>Subir archivo de video</span><input type="file" accept="video/*" (change)="setVideoFromFile($event, video)" /></label>
+                  </div>
+                </article>
+              }
+            }
+
+            @case ('shows') {
+              <div class="panel-head with-action">
+                <div>
+                  <p class="eyebrow">En vivo / Agenda</p>
+                  <h2>Proximo pogo</h2>
+                  <p>Publica flyers y toda la informacion necesaria para cada fecha.</p>
+                </div>
+                <button type="button" class="add-button" (click)="addShow()">+ Agregar flyer</button>
+              </div>
+
+              @for (show of draft.shows; track $index; let index = $index) {
+                <article class="repeat-card">
+                  <header class="repeat-card__head">
+                    <div><span>{{ index + 1 < 10 ? '0' + (index + 1) : index + 1 }}</span><strong>{{ show.title || 'Fecha sin titulo' }}</strong></div>
+                    <button type="button" class="danger" [disabled]="draft.shows.length <= 1" (click)="removeShow(index)">Quitar</button>
+                  </header>
+                  <div class="form-grid">
+                    <label><span>Titulo</span><input [(ngModel)]="show.title" /></label>
+                    <label><span>Estado</span><input [(ngModel)]="show.status" /></label>
+                    <label><span>Fecha</span><input [(ngModel)]="show.dateLabel" /></label>
+                    <label><span>Hora</span><input [(ngModel)]="show.timeLabel" /></label>
+                    <label><span>Lugar</span><input [(ngModel)]="show.venue" /></label>
+                    <label><span>Ciudad</span><input [(ngModel)]="show.city" /></label>
+                    <label><span>Flyer URL</span><input [(ngModel)]="show.imageUrl" /></label>
+                    <label class="file-field"><span>Subir flyer</span><input type="file" accept="image/*" (change)="setImageFromFile($event, show, 'imageUrl')" /></label>
+                    <label class="wide"><span>Detalles</span><textarea rows="3" [(ngModel)]="show.details"></textarea></label>
+                  </div>
+                </article>
+              }
+            }
+
+            @case ('gallery') {
+              <div class="panel-head with-action">
+                <div>
+                  <p class="eyebrow">Archivo / Fotos</p>
+                  <h2>Galeria oficial</h2>
+                  <p>Sube, reemplaza o elimina fotografias que aparecen en la landing.</p>
+                </div>
+                <button type="button" class="add-button" (click)="addGalleryImage()">+ Agregar foto</button>
+              </div>
+
+              @for (image of draft.gallery; track $index; let index = $index) {
+                <article class="repeat-card repeat-card--media">
+                  <header class="repeat-card__head">
+                    <div><span>{{ index + 1 < 10 ? '0' + (index + 1) : index + 1 }}</span><strong>Fotografia {{ index + 1 }}</strong></div>
+                    <button type="button" class="danger" [disabled]="draft.gallery.length <= 1" (click)="removeGalleryImage(index)">Quitar</button>
+                  </header>
+                  <div class="form-grid">
+                    <label><span>Imagen URL</span><input [(ngModel)]="image.fullUrl" /></label>
+                    <label><span>Texto alternativo</span><input [(ngModel)]="image.alt" /></label>
+                    <label class="file-field wide"><span>Subir imagen</span><input type="file" accept="image/*" (change)="setImageFromFile($event, image, 'fullUrl')" /></label>
+                  </div>
+                </article>
+              }
+            }
+
+            @case ('forum') {
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">Comunidad / Foro</p>
+                  <h2>Responder como La Dosis</h2>
+                  <p>Conversa con la comunidad usando la identidad oficial de la banda.</p>
+                </div>
+              </div>
+
+              @if (comments().length) {
+                @for (comment of comments(); track comment.id) {
+                  <article class="comment-card">
+                    <header>
+                      <div class="comment-author"><span>{{ comment.authorName.slice(0, 2).toUpperCase() }}</span><div><strong>{{ comment.authorName }}</strong><time>{{ comment.createdAt | date: 'dd MMM yyyy, HH:mm' }}</time></div></div>
+                      <span class="comment-status">Comunidad</span>
+                    </header>
+                    <p>{{ comment.message }}</p>
+
+                    @for (reply of comment.replies; track reply.id) {
+                      <p class="reply"><strong>{{ reply.authorName }}:</strong> {{ reply.message }}</p>
+                    }
+
+                    <label><span>Respuesta oficial</span><textarea rows="3" [(ngModel)]="replyDrafts[comment.id]" placeholder="Escribe una respuesta como La Dosis..."></textarea></label>
+                    <button type="button" class="reply-button" (click)="reply(comment.id)">Publicar respuesta</button>
+                  </article>
+                }
+              } @else {
+                <div class="empty-state"><span>LD</span><h3>El foro esta tranquilo</h3><p>Todavia no hay comentarios para responder.</p></div>
+              }
+            }
+          }
+        </section>
+
+        <aside class="preview-panel">
+          <header class="preview-panel__head">
+            <div>
+              <p class="eyebrow">Vista previa</p>
+              <h2>Asi se vera</h2>
+            </div>
+            <span class="live-label"><i></i> En vivo</span>
+          </header>
+
+          <div class="preview-window">
+            <div class="preview-browser"><i></i><i></i><i></i><span>ladosisoficial.com</span></div>
+
+            @switch (activePanel()) {
+              @case ('overview') {
+                <div class="preview-site-hero">
+                  <img src="/assets/images/hero-la-dosis.png" alt="La Dosis" />
+                  <div></div>
+                  <img class="preview-logo" src="/assets/images/logo-la-dosis.png" alt="La Dosis" />
+                  <section>
+                    <span>Punk melodico</span>
+                    <h2>Gritar<br />y seguir.</h2>
+                    <b>Escuchar ahora</b>
+                  </section>
+                </div>
+              }
+              @case ('release') {
+                <div class="preview-card preview-release">
+                  <img [src]="draft.release.coverUrl" [alt]="draft.release.coverAlt" />
+                  <span>{{ draft.release.eyebrow }}</span>
+                  <h2>{{ draft.release.title }}</h2>
+                  <p>{{ draft.release.description }}</p>
+                  <b>Escuchar en Spotify</b>
+                </div>
+              }
+              @case ('downloads') {
+                <div class="preview-content-head"><span>Discografia</span><h2>Descarga otros albumes</h2></div>
+                @for (download of draft.downloads; track $index) {
+                  <a class="preview-list" [href]="download.url" target="_blank" rel="noopener">
+                    <span class="preview-number">{{ $index + 1 }}</span>
+                    <span><strong>{{ download.title }}</strong><small>{{ download.description }}</small></span>
+                    <b aria-hidden="true">-&gt;</b>
+                  </a>
+                }
+              }
+              @case ('videos') {
+                <div class="preview-content-head"><span>En pantalla</span><h2>Videos</h2></div>
+                <div class="preview-stack">
+                  @for (video of draft.videos; track video.id) {
+                    <article class="preview-row">
+                      <img [src]="video.thumbnailUrl || draft.release.coverUrl" [alt]="video.thumbnailAlt" />
+                      <div><strong>{{ video.title }}</strong><span>{{ video.mediaType === 'video' ? 'Archivo directo' : 'YouTube' }}</span></div>
+                    </article>
+                  }
+                </div>
+              }
+              @case ('shows') {
+                <div class="preview-content-head"><span>En vivo</span><h2>Proximo pogo</h2></div>
+                <div class="preview-stack">
+                  @for (show of draft.shows; track $index) {
+                    <article class="preview-card preview-show">
+                      <img [src]="show.imageUrl || draft.release.coverUrl" [alt]="show.imageAlt" />
+                      <div><span>{{ show.status }}</span><h2>{{ show.title }}</h2><p>{{ show.dateLabel }} / {{ show.venue }} / {{ show.city }}</p></div>
+                    </article>
+                  }
+                </div>
+              }
+              @case ('gallery') {
+                <div class="preview-content-head"><span>Archivo fotografico</span><h2>Galeria</h2></div>
+                <div class="mini-gallery">
+                  @for (image of draft.gallery; track $index) {
+                    <img [src]="image.fullUrl" [alt]="image.alt" />
+                  }
+                </div>
+              }
+              @case ('forum') {
+                <div class="preview-content-head"><span>La comunidad habla</span><h2>Foro de la banda</h2></div>
+                <div class="preview-stack">
+                  @for (comment of comments(); track comment.id) {
+                    <article class="preview-comment"><strong>{{ comment.authorName }}</strong><p>{{ comment.message }}</p><span>{{ comment.replies.length }} respuestas</span></article>
+                  }
+                </div>
+              }
+            }
+          </div>
+
+          <p class="preview-note">Los cambios se reflejan aqui antes de guardarlos.</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+}
