@@ -1,1 +1,3927 @@
-/* You can add global styles to this file, and also import other style files */
+﻿:root {
+  --black: #070707;
+  --black-soft: #111111;
+  --paper: #eee9df;
+  --paper-dark: #d8d0c2;
+  --red: #e73233;
+  --red-dark: #a52226;
+  --blue: #204a5d;
+  --gray: #8a8584;
+  --border: rgb(238 233 223 / 72%);
+
+  --container-width: 1180px;
+  --header-height: 76px;
+
+  --font-display: "Bebas Neue", sans-serif;
+  --font-condensed: "Barlow Condensed", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-marker: "Permanent Marker", cursive;
+
+  --fast: 180ms ease;
+  --normal: 320ms ease;
+  --scroll-drift: 0;
+  --scroll-drift-soft: 0;
+}
+
+/* ==================================================
+   RESET
+================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + 12px);
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  color: var(--paper);
+  background: var(--black);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+body::before,
+body::after {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  content: "";
+}
+
+body::before {
+  background:
+    url("/assets/textures/xerox-noise.svg") repeat,
+    radial-gradient(
+      circle at 18% 27%,
+      rgb(255 255 255 / 8%) 0 1px,
+      transparent 1.7px
+    ),
+    radial-gradient(
+      circle at 74% 61%,
+      rgb(255 255 255 / 5%) 0 1px,
+      transparent 1.8px
+    );
+  background-size:
+    145px 145px,
+    23px 23px,
+    31px 31px;
+  opacity: 0.07;
+  mix-blend-mode: screen;
+  background-position:
+    calc(var(--scroll-drift) * 1px) calc(var(--scroll-drift-soft) * -1px),
+    calc(var(--scroll-drift-soft) * 1px) calc(var(--scroll-drift) * 1px),
+    calc(var(--scroll-drift) * -1px) calc(var(--scroll-drift-soft) * 1px);
+  transform: translate3d(
+    calc(var(--scroll-drift-soft) * 0.08px),
+    calc(var(--scroll-drift) * -0.06px),
+    0
+  );
+  transition: opacity 220ms ease;
+}
+
+body::after {
+  background:
+    radial-gradient(
+      circle at 12% 18%,
+      rgb(0 0 0 / 42%) 0 1px,
+      transparent 1.8px
+    ),
+    radial-gradient(
+      circle at 67% 43%,
+      rgb(0 0 0 / 34%) 0 1px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 84% 76%,
+      rgb(0 0 0 / 28%) 0 1px,
+      transparent 1.7px
+    );
+  background-size:
+    29px 29px,
+    37px 37px,
+    43px 43px;
+  opacity: 0.055;
+  mix-blend-mode: multiply;
+  background-position:
+    calc(var(--scroll-drift) * -1px) calc(var(--scroll-drift-soft) * 1px),
+    calc(var(--scroll-drift-soft) * -1px) calc(var(--scroll-drift) * -1px),
+    calc(var(--scroll-drift) * 1px) calc(var(--scroll-drift-soft) * -1px);
+  transform: translate3d(
+    calc(var(--scroll-drift) * -0.05px),
+    calc(var(--scroll-drift-soft) * 0.08px),
+    0
+  );
+  transition: opacity 220ms ease;
+}
+
+body.is-scrolling::before {
+  opacity: 0.092;
+}
+
+body.is-scrolling::after {
+  opacity: 0.07;
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
+img,
+iframe,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin-top: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 4px;
+}
+
+.container {
+  width: min(calc(100% - 48px), var(--container-width));
+  margin-inline: auto;
+}
+
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1200;
+  padding: 9px 13px;
+  color: var(--black);
+  background: var(--paper);
+  font-weight: 700;
+  transform: translateY(-160%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* ==================================================
+   FONDOS Y BORDES RASGADOS
+================================================== */
+
+.section-dark {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(
+      circle at 92% 18%,
+      rgb(238 233 223 / 3.2%),
+      transparent 18rem
+    ),
+    radial-gradient(
+      circle at 8% 82%,
+      rgb(231 50 51 / 5%),
+      transparent 16rem
+    ),
+    var(--black);
+}
+
+.section-dark::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(
+      circle at 17% 31%,
+      rgb(255 255 255 / 2.4%) 0 1px,
+      transparent 1.5px
+    ),
+    radial-gradient(
+      circle at 73% 64%,
+      rgb(255 255 255 / 1.9%) 0 1px,
+      transparent 1.5px
+    );
+  background-size: 21px 21px, 31px 31px;
+  opacity: 0.45;
+}
+
+.band > .container,
+.videos > .container,
+.gallery > .container,
+.socials > .container {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+}
+
+.band > .container::before,
+.videos > .container::before,
+.gallery > .container::before,
+.socials > .container::before {
+  position: absolute;
+  inset: -34px -28px;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(ellipse at 13% 24%, rgb(241 238 232 / 6%) 0 2%, transparent 13%),
+    radial-gradient(ellipse at 84% 72%, rgb(241 238 232 / 5%) 0 3%, transparent 16%),
+    radial-gradient(circle at 22% 62%, rgb(241 238 232 / 6%) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 69% 34%, rgb(241 238 232 / 4.5%) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 88% 58%, rgb(156 34 37 / 8%) 0 1px, transparent 2px),
+    linear-gradient(104deg, transparent 0 44%, rgb(241 238 232 / 3.5%) 45% 48%, transparent 49%),
+    url("/assets/textures/xerox-noise.svg") repeat;
+  background-size:
+    100% 100%,
+    100% 100%,
+    24px 27px,
+    31px 29px,
+    38px 35px,
+    180px 100%,
+    160px 160px;
+  opacity: 0.62;
+  mix-blend-mode: screen;
+}
+
+.band > .container::before {
+  background-position: 0 0, 0 0, 6px 9px, 14px 3px, 20px 18px, 36% 0, 0 0;
+}
+
+.videos > .container::before {
+  background-position: 0 0, 0 0, 17px 4px, 5px 21px, 33px 10px, 63% 0, 0 0;
+}
+
+.gallery > .container::before {
+  background-position: 0 0, 0 0, 9px 19px, 22px 7px, 2px 25px, 18% 0, 0 0;
+}
+
+.socials > .container::before {
+  background-position: 0 0, 0 0, 15px 11px, 8px 24px, 29px 4px, 78% 0, 0 0;
+}
+
+.release > .container {
+  position: relative;
+  isolation: isolate;
+}
+
+.release > .container::before {
+  position: absolute;
+  inset: -22px -18px;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(ellipse at 18% 22%, rgb(7 7 7 / 8%) 0 3%, transparent 14%),
+    radial-gradient(ellipse at 74% 70%, rgb(156 34 37 / 9%) 0 3%, transparent 16%),
+    radial-gradient(circle at 28% 58%, rgb(7 7 7 / 9%) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 82% 36%, rgb(7 7 7 / 7%) 0 1px, transparent 1.7px),
+    linear-gradient(98deg, transparent 0 48%, rgb(7 7 7 / 4%) 49% 52%, transparent 53%),
+    url("/assets/textures/xerox-noise.svg") repeat;
+  background-size:
+    100% 100%,
+    100% 100%,
+    28px 26px,
+    36px 32px,
+    210px 100%,
+    150px 150px;
+  opacity: 0.78;
+  mix-blend-mode: multiply;
+}
+
+.band::before,
+.videos::before,
+.gallery::before,
+.socials::before {
+  position: absolute;
+  top: -16px;
+  left: 0;
+  z-index: 5;
+  width: 100%;
+  height: 22px;
+  pointer-events: none;
+  content: "";
+  background: var(--paper);
+  clip-path: polygon(
+    0 49%,
+    2% 34%,
+    4% 56%,
+    7% 39%,
+    10% 61%,
+    13% 37%,
+    17% 55%,
+    20% 32%,
+    24% 59%,
+    27% 38%,
+    31% 62%,
+    35% 35%,
+    39% 56%,
+    43% 31%,
+    47% 60%,
+    51% 36%,
+    55% 57%,
+    59% 33%,
+    63% 61%,
+    67% 37%,
+    71% 56%,
+    75% 30%,
+    79% 59%,
+    83% 35%,
+    87% 62%,
+    91% 38%,
+    95% 57%,
+    98% 33%,
+    100% 50%,
+    100% 72%,
+    0 72%
+  );
+  opacity: 0.9;
+}
+
+.release {
+  position: relative;
+  color: var(--black);
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgb(0 0 0 / 5%) 0 1px,
+      transparent 1.5px
+    ),
+    radial-gradient(
+      circle at 78% 72%,
+      rgb(110 80 55 / 5%) 0 1px,
+      transparent 1.5px
+    ),
+    url("/assets/textures/xerox-noise.svg") repeat,
+    var(--paper);
+  background-size:
+    18px 18px,
+    29px 29px,
+    240px 240px,
+    auto;
+}
+
+.release::before,
+.release::after {
+  position: absolute;
+  left: 0;
+  z-index: 5;
+  width: 100%;
+  height: 34px;
+  pointer-events: none;
+  content: "";
+  background: var(--paper);
+}
+
+.release::before {
+  top: -25px;
+  clip-path: polygon(
+    0 70%,
+    2% 45%,
+    5% 73%,
+    8% 38%,
+    12% 66%,
+    16% 42%,
+    20% 75%,
+    24% 39%,
+    28% 64%,
+    33% 46%,
+    37% 74%,
+    42% 36%,
+    47% 67%,
+    52% 43%,
+    57% 76%,
+    62% 39%,
+    67% 65%,
+    72% 44%,
+    77% 73%,
+    82% 37%,
+    87% 67%,
+    92% 41%,
+    96% 72%,
+    100% 48%,
+    100% 100%,
+    0 100%
+  );
+}
+
+.release::after {
+  bottom: -25px;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 34%,
+    97% 60%,
+    94% 38%,
+    90% 70%,
+    86% 41%,
+    82% 66%,
+    77% 35%,
+    72% 73%,
+    67% 42%,
+    62% 69%,
+    57% 37%,
+    52% 75%,
+    47% 39%,
+    42% 68%,
+    37% 43%,
+    32% 72%,
+    27% 38%,
+    22% 67%,
+    17% 44%,
+    12% 73%,
+    8% 36%,
+    4% 65%,
+    0 42%
+  );
+}
+
+/* ==================================================
+   HEADER
+================================================== */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  min-height: var(--header-height);
+  background:
+    linear-gradient(
+      180deg,
+      rgb(0 0 0 / 94%),
+      rgb(0 0 0 / 56%) 72%,
+      transparent
+    );
+  transition:
+    background-color var(--fast),
+    box-shadow var(--fast);
+}
+
+.site-header.is-scrolled {
+  background: rgb(5 5 5 / 97%);
+  box-shadow: 0 1px 0 rgb(238 233 223 / 11%);
+}
+
+.header__inner {
+  width: min(calc(100% - 48px), var(--container-width));
+  min-height: var(--header-height);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 24px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+}
+
+.brand img {
+  width: 166px;
+  max-height: 70px;
+  object-fit: contain;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 2.1vw, 34px);
+}
+
+.nav-link {
+  position: relative;
+  padding: 9px 0;
+  color: var(--paper);
+  font-family: var(--font-condensed);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.nav-link::after {
+  position: absolute;
+  right: 0;
+  bottom: 2px;
+  left: 0;
+  height: 4px;
+  content: "";
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--fast);
+  clip-path: polygon(
+    0 38%,
+    20% 18%,
+    43% 46%,
+    65% 14%,
+    86% 40%,
+    100% 20%,
+    96% 78%,
+    70% 62%,
+    33% 84%,
+    3% 68%
+  );
+}
+
+.nav-link:is(:hover, :focus-visible, .is-active)::after {
+  transform: scaleX(1);
+}
+
+.header-social,
+.footer-social {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.header-social a,
+.footer-social a {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  color: var(--paper);
+  transition:
+    color var(--fast),
+    transform var(--fast);
+}
+
+.header-social a:hover,
+.header-social a:focus-visible,
+.footer-social a:hover,
+.footer-social a:focus-visible {
+  color: var(--red);
+  transform: translateY(-2px);
+}
+
+.header-social svg,
+.footer-social svg {
+  width: 100%;
+  height: 100%;
+}
+
+.header-social a[aria-label="Instagram"] svg *,
+.footer-social a[aria-label="Instagram"] svg * {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.header-social a[aria-label="YouTube"] svg path:first-child,
+.footer-social a[aria-label="YouTube"] svg path:first-child {
+  fill: currentColor;
+  stroke: none;
+}
+
+.header-social a[aria-label="YouTube"] svg path:last-child,
+.footer-social a[aria-label="YouTube"] svg path:last-child {
+  fill: var(--black);
+  stroke: none;
+}
+
+.header-social a[aria-label="Spotify"] svg circle,
+.footer-social a[aria-label="Spotify"] svg circle {
+  fill: currentColor;
+  stroke: none;
+}
+
+.header-social a[aria-label="Spotify"] svg path,
+.footer-social a[aria-label="Spotify"] svg path {
+  fill: none;
+  stroke: var(--black);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.header-social a[aria-label="Facebook"] svg path,
+.header-social a[aria-label="TikTok"] svg path,
+.footer-social a[aria-label="Facebook"] svg path,
+.footer-social a[aria-label="TikTok"] svg path {
+  fill: currentColor;
+  stroke: none;
+}
+
+.menu-toggle {
+  display: none;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  color: var(--paper);
+  background: transparent;
+  border: 2px solid var(--paper);
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 24px;
+  height: 3px;
+  margin: 5px auto;
+  background: currentColor;
+  transition:
+    transform var(--fast),
+    opacity var(--fast);
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 89;
+  padding: 0;
+  background: rgb(0 0 0 / 62%);
+  border: 0;
+}
+
+.menu-backdrop[hidden] {
+  display: none;
+}
+
+/* ==================================================
+   HERO
+================================================== */
+
+.hero {
+  position: relative;
+  min-height: clamp(720px, 88svh, 900px);
+  display: flex;
+  align-items: center;
+  padding:
+    calc(var(--header-height) + 56px)
+    0
+    80px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--black);
+}
+
+.hero__image,
+.hero__shade,
+.hero__grain {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero__image {
+  z-index: -4;
+  object-fit: cover;
+  object-position: 63% 45%;
+  filter:
+    contrast(1.16)
+    saturate(0.86)
+    brightness(0.84);
+}
+
+.hero__shade {
+  z-index: -3;
+  background:
+    linear-gradient(
+      90deg,
+      rgb(2 2 2 / 98%) 0%,
+      rgb(2 2 2 / 90%) 18%,
+      rgb(2 2 2 / 62%) 36%,
+      rgb(2 2 2 / 24%) 58%,
+      rgb(2 2 2 / 10%) 78%,
+      rgb(2 2 2 / 24%) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgb(0 0 0 / 58%) 0%,
+      transparent 24%,
+      transparent 74%,
+      rgb(0 0 0 / 70%) 100%
+    );
+}
+
+.hero__grain {
+  z-index: -2;
+  pointer-events: none;
+  background: url("/assets/textures/xerox-noise.svg") repeat;
+  background-size: 180px 180px;
+  opacity: 0.05;
+  mix-blend-mode: screen;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero__title {
+  width: fit-content;
+  max-width: 470px;
+  margin: 0;
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 5vw, 5.3rem);
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: 0.008em;
+  text-transform: uppercase;
+  text-shadow: 3px 3px 0 rgb(0 0 0 / 56%);
+}
+
+.hero__line {
+  display: block;
+  width: fit-content;
+  white-space: nowrap;
+}
+
+.hero__highlight {
+  position: relative;
+  z-index: 1;
+  margin-top: 0.08em;
+  padding: 0.02em 0.13em 0.08em;
+  color: transparent;
+  background:
+    url("/assets/textures/xerox-noise.svg") repeat,
+    linear-gradient(
+      180deg,
+      #f7f3ec 0%,
+      #eee9df 48%,
+      #c9c1b4 100%
+    );
+  background-size:
+    88px 88px,
+    100% 100%;
+  background-blend-mode:
+    multiply,
+    normal;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter:
+    contrast(1.3)
+    drop-shadow(2px 2px 0 rgb(72 5 7 / 58%));
+  transform: rotate(-1deg);
+}
+
+.hero__highlight::before {
+  position: absolute;
+  inset: 5% -3% 1%;
+  z-index: -1;
+  content: "";
+  background:
+    radial-gradient(
+      circle at 8% 28%,
+      rgb(45 0 0 / 38%) 0 1px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 34% 71%,
+      rgb(255 230 220 / 17%) 0 1px,
+      transparent 1.8px
+    ),
+    radial-gradient(
+      circle at 68% 36%,
+      rgb(60 0 0 / 32%) 0 1px,
+      transparent 2.2px
+    ),
+    radial-gradient(
+      circle at 87% 64%,
+      rgb(255 230 220 / 14%) 0 1px,
+      transparent 1.8px
+    ),
+    url("/assets/textures/xerox-noise.svg") repeat,
+    linear-gradient(
+      92deg,
+      #a51f22 0%,
+      #e73233 44%,
+      #c32629 100%
+    );
+  background-size:
+    17px 19px,
+    23px 21px,
+    27px 24px,
+    21px 18px,
+    102px 102px,
+    100% 100%;
+  background-blend-mode:
+    multiply,
+    screen,
+    multiply,
+    screen,
+    multiply,
+    normal;
+  clip-path: polygon(
+    1% 9%,
+    7% 4%,
+    19% 7%,
+    32% 2%,
+    47% 6%,
+    61% 1%,
+    77% 5%,
+    97% 0,
+    100% 82%,
+    94% 94%,
+    81% 91%,
+    68% 97%,
+    52% 93%,
+    36% 100%,
+    20% 95%,
+    4% 99%,
+    0 82%
+  );
+  box-shadow:
+    0 2px 0 rgb(70 0 0 / 24%),
+    0 7px 10px rgb(0 0 0 / 30%);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.hero__actions .button {
+  min-height: 50px;
+  padding: 0.78rem 1.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 0;
+  font-size: 1rem;
+  line-height: 1;
+  box-shadow: none;
+}
+
+.hero__actions .button--primary {
+  color: var(--paper);
+  background:
+    radial-gradient(
+      circle at 18% 34%,
+      rgb(255 235 225 / 14%) 0 1px,
+      transparent 1.8px
+    ),
+    radial-gradient(
+      circle at 76% 62%,
+      rgb(70 0 0 / 27%) 0 1px,
+      transparent 2px
+    ),
+    url("/assets/textures/xerox-noise.svg") repeat,
+    linear-gradient(
+      94deg,
+      var(--red-dark) 0%,
+      var(--red) 48%,
+      #c4272a 100%
+    );
+  background-size:
+    19px 19px,
+    27px 27px,
+    92px 92px,
+    100% 100%;
+  background-blend-mode:
+    screen,
+    multiply,
+    multiply,
+    normal;
+  border-color: var(--red-dark);
+}
+
+.hero__actions .button--ghost {
+  color: var(--paper);
+  background:
+    radial-gradient(
+      circle at 22% 38%,
+      rgb(255 255 255 / 10%) 0 1px,
+      transparent 1.7px
+    ),
+    url("/assets/textures/xerox-noise.svg") repeat,
+    rgb(5 5 5 / 72%);
+  background-size:
+    23px 23px,
+    92px 92px,
+    auto;
+  background-blend-mode:
+    screen,
+    screen,
+    normal;
+  border-color: rgb(238 233 223 / 72%);
+}
+
+.hero__actions .button:hover,
+.hero__actions .button:focus-visible {
+  transform: translate(-2px, -2px);
+}
+
+.hero__symbol {
+  position: absolute;
+  right: clamp(28px, 5vw, 72px);
+  bottom: 42px;
+  z-index: 2;
+  width: 78px;
+  opacity: 0.74;
+  transform: rotate(-8deg);
+}
+
+/* ==================================================
+   TÃTULOS Y BOTONES
+================================================== */
+
+.section-title {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: 24px;
+}
+
+.section-title h2 {
+  position: relative;
+  margin: 0;
+  color: inherit;
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 4vw, 4.2rem);
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  text-shadow: 1px 0 0 rgb(231 50 51 / 20%);
+}
+
+.section-title h2 span {
+  color: var(--red);
+}
+
+/* ==================================================
+   TINTA DESGASTADA / EFECTO XEROX
+================================================== */
+
+.hero__line:not(.hero__highlight),
+.section-dark .section-title h2,
+.video-sidebar h4,
+.footer__slogan strong {
+  color: transparent;
+  background:
+    url("/assets/textures/xerox-noise.svg") repeat,
+    linear-gradient(
+      180deg,
+      #f7f3ec 0%,
+      #eee9df 48%,
+      #c9c1b4 100%
+    );
+  background-size:
+    96px 96px,
+    100% 100%;
+  background-blend-mode:
+    multiply,
+    normal;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter:
+    contrast(1.24)
+    drop-shadow(2px 2px 0 rgb(0 0 0 / 42%));
+}
+
+.section-dark .section-title h2 span {
+  color: transparent;
+  background:
+    url("/assets/textures/xerox-noise.svg") repeat,
+    linear-gradient(
+      180deg,
+      #f34a4b 0%,
+      var(--red) 48%,
+      #9d2023 100%
+    );
+  background-size:
+    82px 82px,
+    100% 100%;
+  background-blend-mode:
+    multiply,
+    normal;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter:
+    contrast(1.3)
+    drop-shadow(1px 1px 0 rgb(0 0 0 / 32%));
+}
+
+.release .section-title h2,
+.release__copy h3 {
+  color: transparent;
+  background:
+    url("/assets/textures/xerox-noise.svg") repeat,
+    linear-gradient(
+      180deg,
+      #050505 0%,
+      #242424 50%,
+      #070707 100%
+    );
+  background-size:
+    88px 88px,
+    100% 100%;
+  background-blend-mode:
+    screen,
+    normal;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter:
+    contrast(1.36)
+    drop-shadow(1px 1px 0 rgb(165 34 38 / 20%));
+}
+
+.nav-link,
+.button,
+.platform,
+.social-card,
+.member h3,
+.member p,
+.video-sidebar h3,
+.video-thumb,
+.eyebrow {
+  text-shadow:
+    0.65px 0 rgb(255 255 255 / 15%),
+    -0.65px 0 rgb(0 0 0 / 44%),
+    0 1px 0 rgb(0 0 0 / 28%);
+}
+
+.member h3,
+.video-sidebar h3,
+.eyebrow {
+  filter: contrast(1.12);
+}
+
+.section-title h2::after {
+  position: absolute;
+  bottom: -7px;
+  left: 0;
+  width: 72%;
+  height: 6px;
+  content: "";
+  background:
+    url("/assets/textures/xerox-noise.svg") repeat,
+    linear-gradient(
+      90deg,
+      var(--red-dark),
+      var(--red),
+      #bd2528
+    );
+  background-size:
+    72px 72px,
+    100% 100%;
+  background-blend-mode:
+    multiply,
+    normal;
+  clip-path: polygon(
+    0 35%,
+    17% 18%,
+    35% 44%,
+    55% 15%,
+    77% 38%,
+    100% 10%,
+    96% 75%,
+    70% 62%,
+    42% 82%,
+    12% 68%
+  );
+}
+
+.section-title--music::after {
+  position: absolute;
+  right: -58px;
+  bottom: -10px;
+  color: var(--red);
+  content: "â†™";
+  font-family: var(--font-marker);
+  font-size: 2.1rem;
+  transform: rotate(-8deg);
+}
+
+.section-title--music::after {
+  right: -108px;
+  bottom: -12px;
+  width: 92px;
+  height: 44px;
+  content: "";
+  background:
+    linear-gradient(118deg, transparent 0 42%, currentColor 43% 49%, transparent 50%),
+    linear-gradient(24deg, transparent 0 44%, currentColor 45% 52%, transparent 53%),
+    linear-gradient(176deg, transparent 0 38%, currentColor 39% 48%, transparent 49%);
+  background-position:
+    8px 2px,
+    24px 19px,
+    30px 30px;
+  background-size:
+    34px 32px,
+    28px 22px,
+    64px 12px;
+  background-repeat: no-repeat;
+  filter: drop-shadow(1px 0 0 rgb(231 50 51 / 45%));
+  transform: rotate(-7deg);
+}
+
+h3,
+h4,
+.eyebrow,
+.button,
+.platform,
+.social-card,
+.member p,
+.member a,
+.nav-link {
+  font-family: var(--font-condensed);
+}
+
+.eyebrow {
+  margin-bottom: 4px;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.eyebrow--red {
+  color: var(--red);
+}
+
+.button,
+.platform {
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 9px 17px;
+  color: var(--paper);
+  background: var(--black);
+  border: 2px solid currentColor;
+  border-radius: 0;
+  cursor: pointer;
+  font-family: var(--font-condensed);
+  font-size: 0.98rem;
+  font-weight: 800;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  box-shadow: 3px 4px 0 rgb(0 0 0 / 35%);
+  clip-path: polygon(
+    1% 8%,
+    98% 0,
+    100% 86%,
+    94% 100%,
+    0 94%
+  );
+  transition:
+    transform var(--fast),
+    background-color var(--fast),
+    border-color var(--fast);
+}
+
+.button:hover,
+.button:focus-visible,
+.platform:hover,
+.platform:focus-visible,
+.social-card:hover,
+.social-card:focus-visible {
+  transform: translate(-1px, -2px) rotate(0.5deg);
+}
+
+.button--primary {
+  background:
+    radial-gradient(
+      circle at 18% 34%,
+      rgb(255 235 225 / 14%) 0 1px,
+      transparent 1.8px
+    ),
+    radial-gradient(
+      circle at 76% 62%,
+      rgb(70 0 0 / 27%) 0 1px,
+      transparent 2px
+    ),
+    url("/assets/textures/xerox-noise.svg") repeat,
+    linear-gradient(
+      94deg,
+      var(--red-dark) 0%,
+      var(--red) 48%,
+      #c4272a 100%
+    );
+  background-size:
+    19px 19px,
+    27px 27px,
+    92px 92px,
+    100% 100%;
+  background-blend-mode:
+    screen,
+    multiply,
+    multiply,
+    normal;
+  border-color: var(--red-dark);
+}
+
+.button--ghost,
+.button--outline {
+  background:
+    radial-gradient(
+      circle at 22% 38%,
+      rgb(255 255 255 / 10%) 0 1px,
+      transparent 1.7px
+    ),
+    url("/assets/textures/xerox-noise.svg") repeat,
+    rgb(8 8 8 / 82%);
+  background-size:
+    23px 23px,
+    92px 92px,
+    auto;
+  background-blend-mode:
+    screen,
+    screen,
+    normal;
+  border-color: var(--paper);
+}
+
+.release .button--outline {
+  color: var(--black);
+  background:
+    radial-gradient(
+      circle at 22% 38%,
+      rgb(0 0 0 / 13%) 0 1px,
+      transparent 1.7px
+    ),
+    url("/assets/textures/xerox-noise.svg") repeat,
+    transparent;
+  background-size:
+    23px 23px,
+    92px 92px,
+    auto;
+  background-blend-mode:
+    multiply,
+    multiply,
+    normal;
+  border-color: var(--black);
+}
+
+.button__icon {
+  width: 21px;
+  height: 21px;
+  flex: 0 0 21px;
+}
+
+.button__icon circle {
+  fill: currentColor;
+  stroke: none;
+}
+
+.button__icon path {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+}
+
+.button__play {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  display: inline-grid;
+  place-items: center;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+}
+
+.button__play::after {
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  content: "";
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 7px solid currentColor;
+}
+
+/* ==================================================
+   MÃšSICA
+================================================== */
+
+.music {
+  position: relative;
+  padding: 78px 0 74px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 9% 28%, rgb(241 238 232 / 7%) 0 2%, transparent 11%),
+    radial-gradient(ellipse at 38% 84%, rgb(241 238 232 / 5%) 0 4%, transparent 18%),
+    radial-gradient(ellipse at 76% 22%, rgb(156 34 37 / 7%) 0 3%, transparent 14%),
+    radial-gradient(circle at 68% 47%, rgb(241 238 232 / 7%) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 84% 62%, rgb(241 238 232 / 6%) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 30% 58%, rgb(231 50 51 / 7%) 0 1px, transparent 2px);
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    34px 31px,
+    27px 29px,
+    42px 38px;
+}
+
+.music::after {
+  position: absolute;
+  right: clamp(12px, 3.5vw, 54px);
+  bottom: clamp(34px, 6vw, 70px);
+  z-index: 0;
+  width: clamp(135px, 13vw, 205px);
+  height: clamp(170px, 18vw, 270px);
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(circle at 14% 72%, rgb(241 238 232 / 34%) 0 2px, transparent 2.6px),
+    radial-gradient(circle at 28% 55%, rgb(241 238 232 / 24%) 0 1px, transparent 2px),
+    radial-gradient(circle at 42% 68%, rgb(241 238 232 / 30%) 0 2px, transparent 3px),
+    radial-gradient(circle at 58% 48%, rgb(241 238 232 / 21%) 0 1.5px, transparent 2.6px),
+    radial-gradient(circle at 76% 62%, rgb(241 238 232 / 28%) 0 2px, transparent 3px),
+    linear-gradient(104deg, transparent 0 45%, rgb(241 238 232 / 16%) 46% 50%, transparent 51%),
+    linear-gradient(86deg, transparent 0 53%, rgb(241 238 232 / 11%) 54% 58%, transparent 59%),
+    url("/assets/textures/xerox-noise.svg") repeat;
+  background-size:
+    19px 23px,
+    27px 31px,
+    23px 26px,
+    31px 29px,
+    17px 21px,
+    72px 100%,
+    42px 100%,
+    130px 130px;
+  clip-path: polygon(28% 0, 86% 6%, 100% 32%, 88% 100%, 10% 92%, 0 54%);
+  opacity: 0.5;
+  mix-blend-mode: screen;
+  filter: contrast(1.4) brightness(0.95);
+  transform: rotate(5deg);
+}
+
+.music::before {
+  position: absolute;
+  top: -32px;
+  left: 0;
+  z-index: 8;
+  width: 100%;
+  height: 54px;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(
+      circle at 8% 42%,
+      rgb(255 255 255 / 28%) 0 1px,
+      transparent 1.8px
+    ),
+    radial-gradient(
+      circle at 29% 58%,
+      rgb(0 0 0 / 10%) 0 1px,
+      transparent 1.7px
+    ),
+    radial-gradient(
+      circle at 53% 38%,
+      rgb(255 255 255 / 20%) 0 1px,
+      transparent 1.7px
+    ),
+    radial-gradient(
+      circle at 78% 55%,
+      rgb(0 0 0 / 9%) 0 1px,
+      transparent 1.8px
+    ),
+    url("/assets/textures/xerox-noise.svg") repeat,
+    linear-gradient(
+      180deg,
+      #f4f0e8 0%,
+      var(--paper) 48%,
+      var(--paper-dark) 100%
+    );
+  background-size:
+    27px 19px,
+    31px 23px,
+    34px 21px,
+    29px 20px,
+    170px 170px,
+    100% 100%;
+  clip-path: polygon(
+    0 34%,
+    1.5% 27%,
+    3.2% 38%,
+    5.1% 24%,
+    7.4% 35%,
+    9.6% 30%,
+    12.2% 42%,
+    14.8% 26%,
+    17.1% 36%,
+    19.9% 23%,
+    22.5% 39%,
+    25.4% 29%,
+    28.2% 43%,
+    31.4% 25%,
+    34.1% 37%,
+    37.3% 28%,
+    40.6% 41%,
+    43.9% 24%,
+    47.2% 35%,
+    50.5% 27%,
+    53.7% 42%,
+    56.8% 25%,
+    60.1% 38%,
+    63.2% 29%,
+    66.5% 43%,
+    69.7% 26%,
+    72.9% 37%,
+    76.1% 24%,
+    79.3% 40%,
+    82.4% 28%,
+    85.6% 42%,
+    88.7% 25%,
+    91.5% 37%,
+    94.1% 29%,
+    96.6% 41%,
+    98.2% 27%,
+    100% 35%,
+    100% 74%,
+    98.1% 68%,
+    96.2% 79%,
+    93.8% 66%,
+    91.1% 76%,
+    88.4% 69%,
+    85.5% 81%,
+    82.2% 67%,
+    79.1% 77%,
+    75.9% 65%,
+    72.7% 80%,
+    69.4% 68%,
+    66.1% 77%,
+    62.8% 64%,
+    59.4% 79%,
+    56.1% 67%,
+    52.8% 76%,
+    49.4% 65%,
+    46.1% 80%,
+    42.8% 68%,
+    39.4% 77%,
+    36.1% 64%,
+    32.8% 79%,
+    29.5% 67%,
+    26.2% 76%,
+    22.9% 65%,
+    19.6% 80%,
+    16.4% 68%,
+    13.2% 77%,
+    10% 65%,
+    7.1% 79%,
+    4.5% 68%,
+    2.1% 76%,
+    0 70%
+  );
+  opacity: 0.98;
+  filter:
+    drop-shadow(0 -3px 2px rgb(0 0 0 / 34%))
+    drop-shadow(0 4px 2px rgb(0 0 0 / 46%));
+}
+
+.music__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.82fr)
+    minmax(250px, 0.58fr);
+  gap: clamp(42px, 4.6vw, 76px);
+  align-items: center;
+}
+
+.music .container {
+  position: relative;
+}
+
+.music .container::before,
+.music .container::after {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  content: "";
+  mix-blend-mode: screen;
+}
+
+.music .container::before {
+  left: clamp(-48px, -3vw, -16px);
+  top: clamp(16px, 4vw, 54px);
+  width: clamp(140px, 13vw, 220px);
+  height: clamp(190px, 20vw, 310px);
+  background:
+    linear-gradient(78deg, transparent 0 38%, rgb(241 238 232 / 15%) 39% 43%, transparent 44%),
+    linear-gradient(96deg, transparent 0 47%, rgb(241 238 232 / 11%) 48% 52%, transparent 53%),
+    radial-gradient(circle at 24% 22%, rgb(241 238 232 / 19%) 0 1.5px, transparent 2.4px),
+    radial-gradient(circle at 61% 48%, rgb(241 238 232 / 14%) 0 1px, transparent 2px),
+    radial-gradient(circle at 44% 77%, rgb(241 238 232 / 16%) 0 1.5px, transparent 2.5px);
+  background-size:
+    56px 100%,
+    74px 100%,
+    18px 20px,
+    25px 27px,
+    21px 24px;
+  clip-path: polygon(10% 0, 86% 9%, 100% 92%, 61% 100%, 4% 84%, 0 18%);
+  opacity: 0.48;
+  filter: contrast(1.55);
+  transform: rotate(-9deg);
+}
+
+.music .container::after {
+  left: clamp(380px, 42vw, 650px);
+  top: clamp(156px, 18vw, 245px);
+  width: clamp(160px, 18vw, 290px);
+  height: clamp(72px, 8vw, 126px);
+  background:
+    radial-gradient(circle at 9% 42%, rgb(241 238 232 / 16%) 0 1px, transparent 2px),
+    radial-gradient(circle at 29% 62%, rgb(231 50 51 / 13%) 0 1px, transparent 2.1px),
+    radial-gradient(circle at 63% 36%, rgb(241 238 232 / 12%) 0 1px, transparent 2px),
+    linear-gradient(176deg, transparent 0 41%, rgb(241 238 232 / 8%) 42% 46%, transparent 47%);
+  background-size:
+    18px 20px,
+    24px 26px,
+    29px 22px,
+    100% 24px;
+  clip-path: polygon(0 20%, 94% 0, 100% 73%, 82% 100%, 8% 86%);
+  opacity: 0.55;
+  filter: contrast(1.35);
+  transform: rotate(1.5deg);
+}
+
+.spotify-frame {
+  overflow: hidden;
+  width: 100%;
+  min-height: 352px;
+  background: #050505;
+  border: 2px solid var(--border);
+  box-shadow: 5px 6px 0 rgb(0 0 0 / 42%);
+  clip-path: polygon(
+    0 2%,
+    99% 0,
+    100% 96%,
+    98% 100%,
+    1% 98%
+  );
+}
+
+.spotify-frame iframe {
+  display: block;
+  width: 100%;
+  height: 352px;
+  border: 0;
+}
+
+.music__links {
+  position: relative;
+  display: grid;
+  gap: 9px;
+  align-content: center;
+}
+
+.music__links::before {
+  position: absolute;
+  inset: -28px -44px -22px -18px;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(ellipse at 92% 78%, rgb(210 190 160 / 18%) 0 10%, transparent 31%),
+    radial-gradient(circle at 74% 32%, rgb(241 238 232 / 10%) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 86% 46%, rgb(241 238 232 / 12%) 0 1.2px, transparent 2.2px),
+    radial-gradient(circle at 63% 70%, rgb(156 34 37 / 18%) 0 1px, transparent 2px),
+    linear-gradient(177deg, transparent 0 42%, rgb(241 238 232 / 9%) 43% 45%, transparent 46%);
+  background-size:
+    100% 100%,
+    22px 24px,
+    29px 28px,
+    19px 21px,
+    90px 100%;
+  opacity: 0.95;
+  clip-path: polygon(4% 2%, 97% 0, 100% 88%, 85% 100%, 0 94%);
+}
+
+.music__links::after {
+  position: absolute;
+  right: 6px;
+  bottom: 26px;
+  color: var(--paper);
+  content: "Ã—";
+  font-family: var(--font-marker);
+  font-size: 3rem;
+  transform: rotate(12deg);
+}
+
+.music__links p {
+  max-width: 29ch;
+  margin-bottom: 10px;
+  font-size: 0.94rem;
+}
+
+.platform {
+  width: 224px;
+  min-height: 44px;
+  justify-content: flex-start;
+  padding: 8px 14px;
+  background:
+    radial-gradient(
+      circle at 20% 35%,
+      rgb(255 255 255 / 8%) 0 1px,
+      transparent 1.7px
+    ),
+    url("/assets/textures/xerox-noise.svg") repeat,
+    #080808;
+  background-size:
+    23px 23px,
+    96px 96px,
+    auto;
+  background-blend-mode:
+    screen,
+    screen,
+    normal;
+  border-color: var(--border);
+  box-shadow: none;
+}
+
+.platform.is-disabled {
+  cursor: default;
+  opacity: 0.92;
+}
+
+.platform.is-disabled:hover {
+  transform: none;
+}
+
+.platform svg,
+.social-card svg {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+}
+
+.platform--spotify svg circle,
+.social-card--spotify svg circle {
+  fill: #1db954;
+  stroke: none;
+}
+
+.button--primary .button__icon circle {
+  fill: var(--paper);
+  stroke: none;
+}
+
+.platform--spotify svg path,
+.social-card--spotify svg path {
+  fill: none;
+  stroke: var(--black);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+}
+
+.button--primary .button__icon path {
+  fill: none;
+  stroke: var(--red-dark);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+}
+
+.platform--youtube svg path:first-child,
+.social-card--youtube svg path:first-child {
+  fill: #ff2b2b;
+  stroke: none;
+}
+
+.platform--youtube svg path:last-child,
+.social-card--youtube svg path:last-child {
+  fill: var(--paper);
+  stroke: none;
+}
+
+.platform--tiktok svg path {
+  fill: var(--paper);
+  stroke: none;
+}
+
+/* ==================================================
+   LANZAMIENTO
+================================================== */
+
+.release {
+  padding: 50px 0 58px;
+}
+
+.release__heading {
+  margin-bottom: 22px;
+}
+
+.release__heading h2 {
+  font-size: clamp(2.7rem, 3.6vw, 3.8rem);
+}
+
+.release__grid {
+  display: grid;
+  grid-template-columns:
+    minmax(250px, 330px)
+    minmax(0, 1fr)
+    minmax(210px, 0.55fr);
+  gap: clamp(36px, 5vw, 76px);
+  align-items: center;
+}
+
+.release__cover {
+  position: relative;
+  width: 100%;
+  max-width: 330px;
+  aspect-ratio: 1;
+}
+
+.release__cover-link,
+.release__cover img {
+  width: 100%;
+  height: 100%;
+}
+
+.release__cover-link {
+  display: block;
+  color: inherit;
+}
+
+.release__cover img {
+  object-fit: cover;
+  border: 7px solid var(--paper);
+  box-shadow: 5px 6px 0 rgb(0 0 0 / 31%);
+  transform: rotate(-2deg);
+}
+
+.release__cover::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background: url("/assets/textures/xerox-noise.svg") repeat;
+  background-size: 120px 120px;
+  opacity: 0.09;
+  mix-blend-mode: multiply;
+}
+
+.tape,
+.polaroid,
+.social-card,
+.video-frame {
+  position: relative;
+}
+
+.tape::before,
+.polaroid::before,
+.video-frame::before {
+  position: absolute;
+  z-index: 4;
+  width: 74px;
+  height: 22px;
+  content: "";
+  background:
+    linear-gradient(
+      90deg,
+      rgb(211 190 148 / 90%),
+      rgb(174 152 112 / 75%)
+    );
+  box-shadow: 0 1px 0 rgb(0 0 0 / 18%);
+  transform: rotate(-7deg);
+  clip-path: polygon(
+    2% 5%,
+    98% 0,
+    100% 89%,
+    94% 100%,
+    0 94%
+  );
+}
+
+.tape::before {
+  bottom: 10px;
+  left: -12px;
+}
+
+.polaroid::before {
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-5deg);
+}
+
+.release__copy h3 {
+  max-width: 560px;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 4.2vw, 4.5rem);
+  font-weight: 400;
+  line-height: 0.88;
+  text-transform: uppercase;
+}
+
+.release__copy > p:not(.eyebrow) {
+  max-width: 42ch;
+  margin: 10px 0;
+}
+
+.release__meta,
+.release__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+
+.release__meta {
+  margin-bottom: 13px;
+  font-family: var(--font-condensed);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.punk-sticker {
+  width: clamp(210px, 19vw, 360px);
+  justify-self: end;
+  filter: drop-shadow(5px 6px 0 rgb(0 0 0 / 26%));
+  transform: rotate(3deg);
+}
+
+/* ==================================================
+   BANDA
+================================================== */
+
+.band {
+  padding: 60px 0 66px;
+}
+
+.band__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns:
+    245px
+    minmax(0, 1fr);
+  gap: clamp(34px, 4vw, 58px);
+  align-items: center;
+}
+
+.band__intro p {
+  margin-bottom: 14px;
+  font-size: 0.92rem;
+}
+
+.band__grid::after {
+  position: absolute;
+  right: 0;
+  bottom: -18px;
+  z-index: 3;
+  padding: 7px 14px 9px;
+  color: #4bb1cf;
+  content: "PUNK";
+  font-family: var(--font-marker);
+  font-size: clamp(1.8rem, 3vw, 2.9rem);
+  line-height: 1;
+  background:
+    radial-gradient(circle at 24% 38%, rgb(255 255 255 / 14%) 0 1px, transparent 2px),
+    url("/assets/textures/xerox-noise.svg") repeat,
+    #171717;
+  background-size:
+    18px 18px,
+    90px 90px,
+    auto;
+  border: 2px solid rgb(238 233 223 / 58%);
+  box-shadow: 5px 6px 0 rgb(0 0 0 / 42%);
+  opacity: 0.9;
+  transform: rotate(-10deg);
+  clip-path: polygon(3% 10%, 96% 0, 100% 85%, 91% 100%, 0 92%);
+}
+
+.members-carousel {
+  position: relative;
+  min-width: 0;
+  padding: 8px 42px 18px;
+  isolation: isolate;
+}
+
+.members-carousel::before,
+.members-carousel::after {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  content: "";
+}
+
+.members-carousel::before {
+  inset: -18px 18px 4px;
+  background:
+    radial-gradient(ellipse at 18% 18%, rgb(241 238 232 / 8%) 0 3%, transparent 18%),
+    radial-gradient(circle at 80% 66%, rgb(231 50 51 / 10%) 0 1px, transparent 2px),
+    radial-gradient(circle at 34% 72%, rgb(241 238 232 / 8%) 0 1px, transparent 2px),
+    url("/assets/textures/xerox-noise.svg") repeat;
+  background-size:
+    100% 100%,
+    27px 29px,
+    21px 23px,
+    140px 140px;
+  opacity: 0.7;
+  mix-blend-mode: screen;
+  clip-path: polygon(2% 4%, 96% 0, 100% 88%, 92% 100%, 0 94%);
+}
+
+.members-carousel::after {
+  right: 28px;
+  top: -8px;
+  width: 86px;
+  height: 25px;
+  background: linear-gradient(90deg, rgb(211 190 148 / 86%), rgb(174 152 112 / 66%));
+  box-shadow: 0 1px 0 rgb(0 0 0 / 20%);
+  transform: rotate(6deg);
+  clip-path: polygon(2% 7%, 96% 0, 100% 87%, 92% 100%, 0 93%);
+}
+
+.members {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 22px;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding: 18px 8px 20px;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--red) rgb(238 233 223 / 22%);
+}
+
+.members::-webkit-scrollbar {
+  height: 8px;
+}
+
+.members::-webkit-scrollbar-track {
+  background: rgb(238 233 223 / 18%);
+}
+
+.members::-webkit-scrollbar-thumb {
+  background: var(--red);
+  border: 2px solid var(--black);
+}
+
+.carousel-button {
+  position: absolute;
+  top: 45%;
+  z-index: 4;
+  width: 34px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  color: var(--paper);
+  background:
+    url("/assets/textures/xerox-noise.svg") repeat,
+    var(--red-dark);
+  background-size: 70px 70px, auto;
+  border: 2px solid rgb(238 233 223 / 76%);
+  cursor: pointer;
+  font-family: var(--font-marker);
+  font-size: 2rem;
+  line-height: 1;
+  box-shadow: 3px 4px 0 rgb(0 0 0 / 42%);
+  transform: translateY(-50%) rotate(-2deg);
+  clip-path: polygon(6% 6%, 96% 0, 100% 88%, 88% 100%, 0 92%);
+  transition:
+    transform var(--fast),
+    background var(--fast),
+    border-color var(--fast),
+    box-shadow var(--fast);
+}
+
+.carousel-button:hover,
+.carousel-button:focus-visible {
+  background:
+    url("/assets/textures/xerox-noise.svg") repeat,
+    var(--red);
+  background-size: 70px 70px, auto;
+  border-color: var(--paper);
+  box-shadow: 5px 6px 0 rgb(0 0 0 / 52%);
+  transform: translate(-1px, calc(-50% - 2px)) rotate(-5deg);
+}
+
+.carousel-button--prev {
+  left: 0;
+}
+
+.carousel-button--next {
+  right: 0;
+  transform: translateY(-50%) rotate(2deg);
+}
+
+.carousel-button--next:hover,
+.carousel-button--next:focus-visible {
+  transform: translate(1px, calc(-50% - 2px)) rotate(5deg);
+}
+
+.polaroid {
+  flex: 0 0 clamp(165px, 15.5vw, 205px);
+  scroll-snap-align: center;
+  padding: 9px 9px 12px;
+  color: var(--black);
+  background:
+    url("/assets/textures/xerox-noise.svg") repeat,
+    var(--paper);
+  background-size:
+    120px 120px,
+    auto;
+  background-blend-mode:
+    multiply,
+    normal;
+  border: 1px solid rgb(8 8 8 / 28%);
+  text-align: center;
+  box-shadow: 4px 5px 0 rgb(0 0 0 / 34%);
+  clip-path: polygon(
+    1% 2%,
+    98% 0,
+    100% 96%,
+    94% 100%,
+    3% 97%,
+    0 8%
+  );
+}
+
+.polaroid:nth-child(1) {
+  transform: rotate(-1.2deg);
+}
+
+.polaroid:nth-child(2) {
+  transform: rotate(1.2deg) translateY(-3px);
+}
+
+.polaroid:nth-child(3) {
+  transform: rotate(-0.7deg);
+}
+
+.polaroid:nth-child(4) {
+  transform: rotate(1deg) translateY(-2px);
+}
+
+.member img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  filter:
+    grayscale(0.9)
+    contrast(1.2);
+}
+
+.member:nth-child(1) img {
+  object-position: 48% 43%;
+}
+
+.member:nth-child(2) img {
+  object-position: 62% 43%;
+}
+
+.member:nth-child(3) img {
+  object-position: 58% 70%;
+}
+
+.member:nth-child(4) img {
+  object-position: 50% 54%;
+}
+
+.member h3 {
+  margin: 7px 0 0;
+  font-family: var(--font-condensed);
+  font-size: 1.05rem;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.member p {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.member a {
+  width: 17px;
+  height: 17px;
+  display: inline-grid;
+  place-items: center;
+  margin-top: 4px;
+  color: var(--black);
+}
+
+.member a svg * {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+/* ==================================================
+   VIDEOS
+================================================== */
+
+.videos {
+  padding: 58px 0 66px;
+}
+
+.videos > .container {
+  position: relative;
+  isolation: isolate;
+}
+
+.videos > .container::after {
+  position: absolute;
+  left: clamp(-16px, -1vw, -6px);
+  bottom: -12px;
+  z-index: -1;
+  width: min(48vw, 520px);
+  height: 120px;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(circle at 12% 66%, rgb(231 50 51 / 22%) 0 1px, transparent 2px),
+    radial-gradient(circle at 36% 42%, rgb(241 238 232 / 8%) 0 1px, transparent 2px),
+    radial-gradient(circle at 68% 72%, rgb(231 50 51 / 17%) 0 1px, transparent 2px),
+    linear-gradient(176deg, transparent 0 44%, rgb(241 238 232 / 8%) 45% 48%, transparent 49%);
+  background-size:
+    21px 23px,
+    29px 31px,
+    18px 20px,
+    100% 24px;
+  opacity: 0.78;
+  mix-blend-mode: screen;
+  clip-path: polygon(0 16%, 98% 0, 100% 70%, 84% 100%, 2% 88%);
+}
+
+.videos::after {
+  position: absolute;
+  top: 38%;
+  right: clamp(20px, 4vw, 58px);
+  width: 72px;
+  height: 110px;
+  content: "";
+  background:
+    linear-gradient(
+      114deg,
+      transparent 0 44%,
+      var(--red) 45% 51%,
+      transparent 52%
+    ),
+    linear-gradient(
+      104deg,
+      transparent 0 47%,
+      var(--red) 48% 54%,
+      transparent 55%
+    ),
+    linear-gradient(
+      118deg,
+      transparent 0 45%,
+      var(--red) 46% 52%,
+      transparent 53%
+    );
+  background-position:
+    0 0,
+    11px 32px,
+    4px 64px;
+  background-size: 65px 46px;
+  background-repeat: no-repeat;
+}
+
+.videos__grid {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.25fr)
+    minmax(340px, 0.75fr);
+  gap: 34px;
+  align-items: end;
+}
+
+.video-frame {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #050505;
+  border: 2px solid var(--border);
+  box-shadow: 5px 5px 0 rgb(0 0 0 / 38%);
+  clip-path: polygon(
+    0 3%,
+    99% 0,
+    100% 94%,
+    97% 100%,
+    1% 98%
+  );
+}
+
+.video-frame::before {
+  top: -14px;
+  left: -9px;
+  background: var(--red);
+  transform: rotate(-8deg);
+}
+
+.video-frame::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(circle at 78% 22%, rgb(238 233 223 / 10%) 0 1px, transparent 2px),
+    url("/assets/textures/xerox-noise.svg") repeat;
+  background-size: 23px 23px, 120px 120px;
+  opacity: 0.18;
+  mix-blend-mode: screen;
+}
+
+.video-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.video-thumb span {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  width: 56px;
+  height: 56px;
+  background: rgb(0 0 0 / 62%);
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.video-thumb span::before {
+  position: absolute;
+  top: 16px;
+  left: 21px;
+  content: "";
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 16px solid currentColor;
+}
+
+.video-sidebar h3 {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  text-transform: none;
+}
+
+.video-sidebar .eyebrow--red {
+  position: relative;
+  width: fit-content;
+}
+
+.video-sidebar .eyebrow--red::after {
+  position: absolute;
+  top: -9px;
+  right: -24px;
+  color: var(--red);
+  content: "*";
+  font-family: var(--font-marker);
+  font-size: 2rem;
+  transform: rotate(14deg);
+}
+
+.video-sidebar h4 {
+  margin: 16px 0 9px;
+  font-size: 1.35rem;
+  text-transform: uppercase;
+}
+
+.video-sidebar .button {
+  min-height: 38px;
+  padding: 7px 13px;
+}
+
+.video-thumbs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.video-thumb {
+  position: relative;
+  min-width: 0;
+  padding: 5px;
+  color: var(--paper);
+  background:
+    url("/assets/textures/xerox-noise.svg") repeat,
+    var(--black-soft);
+  background-size:
+    100px 100px,
+    auto;
+  background-blend-mode:
+    screen,
+    normal;
+  border: 2px solid rgb(238 233 223 / 58%);
+  cursor: pointer;
+  font-family: var(--font-condensed);
+  font-size: 0.83rem;
+  font-weight: 700;
+  text-align: left;
+  box-shadow: 3px 4px 0 rgb(0 0 0 / 34%);
+  clip-path: polygon(1% 5%, 98% 0, 100% 89%, 92% 100%, 0 94%);
+  transform: rotate(-0.8deg);
+}
+
+.video-thumb:nth-child(even) {
+  transform: rotate(0.9deg);
+}
+
+.video-thumb::after {
+  position: absolute;
+  top: -8px;
+  left: 12px;
+  width: 50px;
+  height: 14px;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(90deg, rgb(211 190 148 / 82%), rgb(174 152 112 / 58%));
+  transform: rotate(-5deg);
+  clip-path: polygon(3% 7%, 97% 0, 100% 84%, 91% 100%, 0 92%);
+}
+
+.video-thumb img {
+  width: 100%;
+  height: 60px;
+  object-fit: cover;
+  filter:
+    grayscale(0.65)
+    contrast(1.22);
+}
+
+.video-thumb span {
+  width: 34px;
+  height: 34px;
+}
+
+.video-thumb span::before {
+  top: 9px;
+  left: 13px;
+  border-top-width: 7px;
+  border-bottom-width: 7px;
+  border-left-width: 11px;
+}
+
+.video-thumb.is-active {
+  border-color: var(--red);
+}
+
+/* ==================================================
+   GALERÃA
+================================================== */
+
+.gallery {
+  padding: 46px 0 52px;
+}
+
+.gallery__header {
+  display: block;
+  align-items: flex-end;
+  margin-bottom: 21px;
+}
+
+.gallery__header .section-title {
+  margin-bottom: 0;
+}
+
+.gallery-carousel {
+  position: relative;
+  padding: 10px 42px 18px;
+  isolation: isolate;
+}
+
+.gallery-carousel::before {
+  position: absolute;
+  inset: -14px 18px 0;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(ellipse at 12% 28%, rgb(231 50 51 / 14%) 0 3%, transparent 17%),
+    radial-gradient(circle at 72% 58%, rgb(241 238 232 / 9%) 0 1px, transparent 2px),
+    radial-gradient(circle at 34% 78%, rgb(231 50 51 / 12%) 0 1px, transparent 2px),
+    url("/assets/textures/xerox-noise.svg") repeat;
+  background-size:
+    100% 100%,
+    23px 25px,
+    31px 29px,
+    150px 150px;
+  opacity: 0.72;
+  mix-blend-mode: screen;
+  clip-path: polygon(1% 8%, 98% 0, 100% 80%, 91% 100%, 0 92%);
+}
+
+.gallery__grid {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding: 14px 8px 18px;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--red) rgb(238 233 223 / 20%);
+}
+
+.gallery__grid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.gallery__grid::-webkit-scrollbar-track {
+  background: rgb(238 233 223 / 16%);
+}
+
+.gallery__grid::-webkit-scrollbar-thumb {
+  background: var(--red);
+  border: 2px solid var(--black);
+}
+
+.gallery-item {
+  position: relative;
+  flex: 0 0 clamp(190px, 18vw, 265px);
+  height: clamp(118px, 11vw, 160px);
+  scroll-snap-align: center;
+  padding: 0;
+  overflow: hidden;
+  background: #050505;
+  border: 2px solid rgb(238 233 223 / 68%);
+  cursor: pointer;
+  box-shadow: 3px 4px 0 rgb(0 0 0 / 34%);
+  clip-path: polygon(
+    1% 3%,
+    99% 0,
+    100% 94%,
+    96% 100%,
+    0 97%
+  );
+}
+
+.gallery-control {
+  position: absolute;
+  top: 50%;
+  z-index: 4;
+  width: 34px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  color: var(--paper);
+  background:
+    url("/assets/textures/xerox-noise.svg") repeat,
+    var(--red-dark);
+  background-size: 80px 80px, auto;
+  border: 2px solid rgb(238 233 223 / 76%);
+  cursor: pointer;
+  font-family: var(--font-marker);
+  font-size: 2rem;
+  line-height: 1;
+  box-shadow: 3px 4px 0 rgb(0 0 0 / 42%);
+  transform: translateY(-50%) rotate(-2deg);
+  clip-path: polygon(6% 6%, 96% 0, 100% 88%, 88% 100%, 0 92%);
+  transition:
+    transform var(--fast),
+    background var(--fast),
+    border-color var(--fast),
+    box-shadow var(--fast);
+}
+
+.gallery-control:hover,
+.gallery-control:focus-visible {
+  background:
+    url("/assets/textures/xerox-noise.svg") repeat,
+    var(--red);
+  background-size: 80px 80px, auto;
+  border-color: var(--paper);
+  box-shadow: 5px 6px 0 rgb(0 0 0 / 52%);
+  transform: translate(-1px, calc(-50% - 2px)) rotate(-5deg);
+}
+
+.gallery-control--prev {
+  left: 0;
+}
+
+.gallery-control--next {
+  right: 0;
+  transform: translateY(-50%) rotate(2deg);
+}
+
+.gallery-control--next:hover,
+.gallery-control--next:focus-visible {
+  transform: translate(1px, calc(-50% - 2px)) rotate(5deg);
+}
+
+.gallery-item:nth-child(odd) {
+  transform: rotate(-0.6deg);
+}
+
+.gallery-item:nth-child(even) {
+  transform: rotate(0.6deg);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter:
+    contrast(1.18)
+    saturate(0.86);
+}
+
+.gallery-item:nth-child(1) img {
+  object-position: 50% 28%;
+}
+
+.gallery-item:nth-child(2) img {
+  object-position: 43% 42%;
+}
+
+.gallery-item:nth-child(3) img {
+  object-position: 55% 45%;
+}
+
+.gallery-item:nth-child(4) img {
+  object-position: 50% 66%;
+}
+
+.gallery-item:nth-child(5) img {
+  object-position: 52% 28%;
+}
+
+.gallery-item:nth-child(6) img {
+  object-position: 50% 54%;
+}
+
+/* ==================================================
+   REDES
+================================================== */
+
+.socials {
+  position: relative;
+  padding: 46px 0 52px;
+  overflow: hidden;
+}
+
+.socials::before,
+.socials::after {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  content: "";
+}
+
+.socials::before {
+  left: 0;
+  right: 0;
+  top: 14px;
+  height: 3px;
+  background: rgb(238 233 223 / 66%);
+  clip-path: polygon(0 54%, 8% 12%, 18% 62%, 31% 18%, 43% 70%, 57% 20%, 70% 64%, 84% 16%, 100% 56%, 100% 100%, 0 100%);
+  filter: drop-shadow(0 2px 0 rgb(0 0 0 / 60%));
+}
+
+.socials::after {
+  inset: 14px 0 10px;
+  background:
+    radial-gradient(ellipse at 8% 72%, rgb(231 50 51 / 16%) 0 4%, transparent 16%),
+    radial-gradient(ellipse at 88% 40%, rgb(238 233 223 / 7%) 0 3%, transparent 17%),
+    radial-gradient(circle at 22% 40%, rgb(238 233 223 / 8%) 0 1px, transparent 2px),
+    radial-gradient(circle at 62% 74%, rgb(231 50 51 / 12%) 0 1px, transparent 2px),
+    url("/assets/textures/xerox-noise.svg") repeat;
+  background-size: 100% 100%, 100% 100%, 24px 25px, 31px 29px, 150px 150px;
+  opacity: 0.72;
+  mix-blend-mode: screen;
+}
+
+.socials__layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(190px, 0.32fr) minmax(0, 1fr);
+  gap: clamp(34px, 5vw, 72px);
+  align-items: center;
+}
+
+.socials__layout::before,
+.socials__layout::after {
+  position: absolute;
+  z-index: 0;
+  color: var(--paper);
+  content: "âœ¶";
+  font-family: var(--font-marker);
+  font-size: clamp(2rem, 3vw, 3.2rem);
+  line-height: 1;
+  text-shadow: 2px 2px 0 rgb(0 0 0 / 60%);
+  opacity: 0.9;
+}
+
+.socials__layout::before {
+  left: clamp(148px, 17vw, 220px);
+  top: 50%;
+  transform: translateY(-50%) rotate(-15deg);
+}
+
+.socials__layout::after {
+  right: -18px;
+  top: 45%;
+  transform: translateY(-50%) rotate(16deg);
+}
+
+.socials .section-title {
+  margin-bottom: 0;
+}
+
+.social-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 26px);
+  min-width: 0;
+}
+
+.socials .section-title {
+  position: relative;
+  z-index: 2;
+}
+
+.social-card {
+  position: relative;
+  min-height: 98px;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  gap: 8px;
+  padding: 15px 18px 12px;
+  color: var(--paper);
+  border: 2px solid rgb(238 233 223 / 72%);
+  font-family: var(--font-condensed);
+  font-size: 1.05rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0 rgb(0 0 0 / 58%);
+  box-shadow: 4px 5px 0 rgb(0 0 0 / 42%);
+  clip-path: polygon(
+    2% 7%,
+    97% 0,
+    100% 85%,
+    94% 100%,
+    0 92%
+  );
+  transition:
+    transform var(--fast),
+    border-color var(--fast),
+    box-shadow var(--fast),
+    filter var(--fast);
+}
+
+.social-card:hover,
+.social-card:focus-visible {
+  border-color: var(--paper);
+  box-shadow:
+    6px 7px 0 rgb(0 0 0 / 54%),
+    inset 0 0 0 999px rgb(255 255 255 / 4%);
+  filter: contrast(1.08) saturate(1.08);
+  transform: translate(-2px, -3px) rotate(-1.2deg);
+}
+
+.social-card:nth-child(even):hover,
+.social-card:nth-child(even):focus-visible {
+  transform: translate(2px, -3px) rotate(1.2deg);
+}
+
+.social-card::before,
+.social-card::after {
+  position: absolute;
+  z-index: 2;
+  width: 38px;
+  height: 16px;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(90deg, rgb(211 190 148 / 84%), rgb(174 152 112 / 60%));
+  box-shadow: 0 1px 0 rgb(0 0 0 / 20%);
+  clip-path: polygon(3% 7%, 97% 0, 100% 84%, 91% 100%, 0 92%);
+}
+
+.social-card::before {
+  top: -8px;
+  left: 12px;
+  transform: rotate(-10deg);
+}
+
+.social-card::after {
+  right: 10px;
+  bottom: -7px;
+  transform: rotate(8deg);
+}
+
+.social-card:nth-child(even)::before {
+  left: auto;
+  right: 16px;
+  transform: rotate(9deg);
+}
+
+.social-card:nth-child(3)::after,
+.social-card:nth-child(5)::after {
+  display: none;
+}
+
+.social-card svg {
+  width: 38px;
+  height: 38px;
+  filter: drop-shadow(2px 2px 0 rgb(0 0 0 / 55%));
+}
+
+.social-card--instagram {
+  background:
+    url("/assets/textures/xerox-noise.svg") repeat,
+    linear-gradient(
+      105deg,
+      #76203a,
+      #a52a52 56%,
+      #6d1932
+    );
+  background-size:
+    95px 95px,
+    100% 100%;
+  background-blend-mode:
+    multiply,
+    normal;
+}
+
+.social-card--youtube {
+  background:
+    url("/assets/textures/xerox-noise.svg") repeat,
+    linear-gradient(
+      96deg,
+      #7f171a,
+      var(--red-dark) 48%,
+      #d32c2f
+    );
+  background-size:
+    95px 95px,
+    100% 100%;
+  background-blend-mode:
+    multiply,
+    normal;
+}
+
+.social-card--tiktok {
+  background:
+    url("/assets/textures/xerox-noise.svg") repeat,
+    #090909;
+  background-size:
+    95px 95px,
+    auto;
+  background-blend-mode:
+    screen,
+    normal;
+}
+
+.social-card--spotify {
+  background:
+    url("/assets/textures/xerox-noise.svg") repeat,
+    #0b0b0b;
+  background-size:
+    95px 95px,
+    auto;
+  background-blend-mode:
+    screen,
+    normal;
+}
+
+.social-card--facebook {
+  background:
+    url("/assets/textures/xerox-noise.svg") repeat,
+    linear-gradient(
+      104deg,
+      #15313e,
+      var(--blue) 54%,
+      #132c37
+    );
+  background-size:
+    95px 95px,
+    100% 100%;
+  background-blend-mode:
+    multiply,
+    normal;
+}
+
+@media (max-width: 1280px) {
+  .socials__layout {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .socials__layout::before {
+    left: 145px;
+    top: 44px;
+  }
+
+  .socials__layout::after {
+    right: 8px;
+  }
+
+  .social-grid {
+    grid-template-columns: repeat(5, minmax(140px, 1fr));
+  }
+}
+
+.social-card--instagram svg * {
+  fill: none;
+  stroke: var(--paper);
+  stroke-width: 2;
+}
+
+.social-card--youtube svg path:first-child {
+  fill: var(--paper);
+  stroke: none;
+}
+
+.social-card--youtube svg path:last-child {
+  fill: var(--red-dark);
+  stroke: none;
+}
+
+.social-card--spotify svg circle {
+  fill: #1db954;
+  stroke: none;
+}
+
+.social-card--spotify svg path {
+  fill: none;
+  stroke: var(--black);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+}
+
+.social-card--tiktok svg path,
+.social-card--facebook svg path {
+  fill: currentColor;
+}
+
+/* ==================================================
+   FOOTER
+================================================== */
+
+.footer {
+  min-height: 94px;
+  padding: 15px 0;
+  background: #050505;
+}
+
+.footer__inner {
+  display: grid;
+  grid-template-columns:
+    160px
+    1fr
+    1fr
+    auto;
+  gap: 26px;
+  align-items: center;
+}
+
+.footer .brand img {
+  width: 145px;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 0.82rem;
+}
+
+.footer__slogan strong {
+  position: relative;
+  font-family: var(--font-condensed);
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.footer__slogan strong::after {
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  content: "";
+  background:
+    url("/assets/textures/xerox-noise.svg") repeat,
+    var(--red);
+  background-size:
+    72px 72px,
+    auto;
+  background-blend-mode:
+    multiply,
+    normal;
+  clip-path: polygon(
+    0 35%,
+    100% 0,
+    94% 100%,
+    5% 78%
+  );
+}
+
+.footer__copyright {
+  text-align: center;
+}
+
+/* ==================================================
+   LIGHTBOX
+================================================== */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  grid-template-columns:
+    52px
+    minmax(0, 1fr)
+    52px;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgb(0 0 0 / 92%);
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox__figure {
+  margin: 0;
+  text-align: center;
+}
+
+.lightbox__figure img {
+  max-height: 78vh;
+  margin-inline: auto;
+  border: 2px solid var(--border);
+  object-fit: contain;
+}
+
+.lightbox__close,
+.lightbox__nav {
+  min-width: 44px;
+  min-height: 44px;
+  color: var(--paper);
+  background: var(--black-soft);
+  border: 2px solid var(--border);
+  cursor: pointer;
+  font-size: 2rem;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.lightbox figcaption {
+  margin-top: 10px;
+}
+
+/* ==================================================
+   ANIMACIONES
+================================================== */
+
+.js .reveal {
+  opacity: 0;
+  transform: translateY(13px);
+  transition:
+    opacity 340ms ease,
+    transform 340ms ease;
+}
+
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==================================================
+   TABLET GRANDE
+================================================== */
+
+@media (max-width: 1120px) {
+  .header__inner {
+    grid-template-columns: 160px minmax(0, 1fr) auto;
+  }
+
+  .brand img {
+    width: 148px;
+  }
+
+  .main-nav {
+    gap: 19px;
+  }
+
+  .nav-link {
+    font-size: 0.88rem;
+  }
+
+  .release__grid {
+    grid-template-columns:
+      minmax(240px, 300px)
+      minmax(0, 1fr)
+      minmax(170px, 0.42fr);
+    gap: 30px;
+  }
+
+  .release__cover {
+    width: 100%;
+  }
+
+  .punk-sticker {
+    width: clamp(170px, 18vw, 260px);
+  }
+
+  .members {
+    gap: 14px;
+  }
+
+  .member img {
+    height: 142px;
+  }
+
+}
+
+/* ==================================================
+   TABLET / MENÃš MÃ“VIL
+================================================== */
+
+@media (max-width: 920px) {
+  :root {
+    --header-height: 70px;
+  }
+
+  .container,
+  .header__inner {
+    width: min(calc(100% - 32px), var(--container-width));
+  }
+
+  .header__inner {
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+  }
+
+  .brand img {
+    width: 136px;
+    max-height: 62px;
+  }
+
+  .header-social {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .main-nav {
+    position: fixed;
+    top: var(--header-height);
+    right: 0;
+    bottom: 0;
+    z-index: 90;
+    width: min(84vw, 340px);
+    display: grid;
+    align-content: start;
+    justify-content: stretch;
+    gap: 0;
+    padding: 22px;
+    background: rgb(8 8 8 / 98%);
+    border-left: 2px solid rgb(238 233 223 / 18%);
+    transform: translateX(100%);
+    transition: transform var(--fast);
+  }
+
+  .main-nav.is-open {
+    transform: translateX(0);
+  }
+
+  .nav-link {
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgb(238 233 223 / 14%);
+    font-size: 1.25rem;
+  }
+
+  .hero {
+    min-height: clamp(680px, 86svh, 820px);
+    padding:
+      calc(var(--header-height) + 46px)
+      0
+      70px;
+  }
+
+  .hero__image {
+    object-position: 61% 46%;
+  }
+
+  .hero__title {
+    max-width: 440px;
+    font-size: clamp(3.5rem, 7.2vw, 4.6rem);
+  }
+
+  .hero__symbol {
+    bottom: 30px;
+    width: 64px;
+  }
+
+  .music__grid,
+  .band__grid,
+  .videos__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .music__grid {
+    gap: 30px;
+  }
+
+  .music__links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .music__links p {
+    grid-column: 1 / -1;
+    max-width: 48ch;
+  }
+
+  .platform {
+    width: 100%;
+  }
+
+  .release__grid {
+    grid-template-columns:
+      minmax(230px, 300px)
+      minmax(0, 1fr);
+  }
+
+  .punk-sticker {
+    position: absolute;
+    right: 16px;
+    bottom: 20px;
+    width: clamp(135px, 20vw, 210px);
+  }
+
+  .band__grid {
+    gap: 36px;
+  }
+
+  .videos__grid {
+    gap: 28px;
+  }
+
+  .video-sidebar {
+    max-width: 620px;
+  }
+
+  .gallery-item {
+    height: 126px;
+  }
+
+  .socials__layout {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .social-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .footer__inner {
+    grid-template-columns:
+      145px
+      1fr
+      auto;
+  }
+
+  .footer__copyright {
+    display: none;
+  }
+}
+
+/* ==================================================
+   MÃ“VIL
+================================================== */
+
+@media (max-width: 680px) {
+  .container,
+  .header__inner {
+    width: min(calc(100% - 24px), var(--container-width));
+  }
+
+  .hero {
+    min-height: clamp(680px, 92svh, 840px);
+    align-items: flex-end;
+    padding:
+      calc(var(--header-height) + 40px)
+      0
+      64px;
+  }
+
+  .hero__image {
+    object-position: 58% center;
+  }
+
+  .hero__shade {
+    background:
+      linear-gradient(
+        180deg,
+        rgb(3 3 3 / 68%) 0%,
+        rgb(3 3 3 / 18%) 28%,
+        rgb(3 3 3 / 27%) 50%,
+        rgb(3 3 3 / 77%) 72%,
+        rgb(3 3 3 / 98%) 100%
+      );
+  }
+
+  .hero__title {
+    max-width: 100%;
+    font-size: clamp(2.9rem, 12vw, 4rem);
+  }
+
+  .hero__actions {
+    display: grid;
+    width: min(100%, 300px);
+    gap: 11px;
+    margin-top: 24px;
+  }
+
+  .hero__actions .button {
+    width: 100%;
+  }
+
+  .hero__symbol {
+    right: 18px;
+    bottom: 22px;
+    width: 52px;
+  }
+
+  .section-title h2 {
+    font-size: clamp(2.45rem, 13vw, 3.5rem);
+  }
+
+  .section-title--music::after,
+  .music__links::after,
+  .band__grid::after,
+  .videos::after {
+    display: none;
+  }
+
+  .music,
+  .band,
+  .videos,
+  .gallery,
+  .socials {
+    padding-top: 52px;
+    padding-bottom: 56px;
+  }
+
+  .music {
+    padding-top: 68px;
+  }
+
+  .music::before {
+    top: -25px;
+    height: 44px;
+  }
+
+  .music__links {
+    grid-template-columns: 1fr;
+  }
+
+  .spotify-frame iframe {
+    height: 352px;
+  }
+
+  .release {
+    padding: 54px 0 62px;
+  }
+
+  .release__grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .release__cover {
+    width: 100%;
+    max-width: 330px;
+  }
+
+  .release__copy h3 {
+    font-size: clamp(3rem, 15vw, 4rem);
+  }
+
+  .punk-sticker {
+    position: static;
+    width: min(62vw, 220px);
+    justify-self: end;
+  }
+
+  .release__actions {
+    display: grid;
+    width: min(100%, 290px);
+  }
+
+  .members {
+    gap: 18px;
+  }
+
+  .members-carousel {
+    padding-inline: 34px;
+  }
+
+  .polaroid {
+    flex-basis: clamp(170px, 42vw, 220px);
+  }
+
+  .member img {
+    height: 160px;
+  }
+
+  .video-thumbs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .video-thumb img {
+    height: 68px;
+  }
+
+  .gallery__header {
+    align-items: start;
+  }
+
+  .gallery-carousel {
+    padding-inline: 34px;
+  }
+
+  .gallery-item {
+    flex-basis: clamp(180px, 45vw, 250px);
+    height: 135px;
+  }
+
+  .social-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .social-card {
+    min-height: 72px;
+    font-size: 1rem;
+  }
+
+  .footer__inner {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .footer__copyright {
+    display: block;
+  }
+
+  .footer-social {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero {
+    min-height: clamp(620px, 90svh, 740px);
+    padding-bottom: 56px;
+  }
+
+  .hero__title {
+    font-size: clamp(2.5rem, 12.7vw, 3.25rem);
+    line-height: 0.9;
+  }
+
+  .hero__symbol {
+    display: none;
+  }
+
+  .music {
+    padding-top: 62px;
+  }
+
+  .music::before {
+    top: -21px;
+    height: 38px;
+  }
+
+  .member img {
+    height: 210px;
+  }
+
+  .members-carousel {
+    padding-inline: 28px;
+  }
+
+  .polaroid {
+    flex-basis: min(74vw, 250px);
+  }
+
+  .carousel-button {
+    width: 30px;
+    height: 44px;
+  }
+
+  .video-thumbs {
+    grid-template-columns: 1fr;
+  }
+
+  .video-thumb img {
+    height: 105px;
+  }
+
+  .gallery-item {
+    flex-basis: min(76vw, 280px);
+    height: 170px;
+  }
+
+  .social-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lightbox {
+    grid-template-columns:
+      42px
+      minmax(0, 1fr)
+      42px;
+    padding: 8px;
+  }
+}
+
+@media (max-height: 600px) and (orientation: landscape) {
+  .hero {
+    min-height: 600px;
+    padding-top: calc(var(--header-height) + 34px);
+    padding-bottom: 48px;
+  }
+
+  .hero__title {
+    font-size: clamp(3rem, 7vw, 4.2rem);
+  }
+
+  .hero__actions {
+    margin-top: 20px;
+  }
+}
+
+/* ==================================================
+   MOVIMIENTO REDUCIDO
+================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ==================================================
+   CORRECCIÃ“N: TIPOGRAFÃA ORIGINAL + SUCIEDAD PUNK
+   Pegar al FINAL de styles.css
+================================================== */
+
+/*
+  RESTAURA LA TIPOGRAFÃA ORIGINAL.
+  No se usa background-clip en el texto.
+*/
+
+.hero__line:not(.hero__highlight) {
+  color: var(--paper);
+  background: none;
+  background-clip: initial;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: var(--paper);
+  filter: none;
+}
+
+.hero__highlight {
+  color: var(--paper);
+  background: none;
+  background-clip: initial;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: var(--paper);
+  filter: none;
+  text-shadow:
+    2px 2px 0 rgb(80 0 0 / 48%),
+    0 1px 0 rgb(0 0 0 / 38%);
+}
+
+.section-dark .section-title h2 {
+  color: var(--paper);
+  background: none;
+  background-clip: initial;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: var(--paper);
+  filter: none;
+}
+
+.section-dark .section-title h2 span {
+  color: var(--red);
+  background: none;
+  background-clip: initial;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: var(--red);
+  filter: none;
+}
+
+.release .section-title h2,
+.release__copy h3 {
+  color: var(--black);
+  background: none;
+  background-clip: initial;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: var(--black);
+  filter: none;
+}
+
+.video-sidebar h4,
+.footer__slogan strong {
+  color: var(--paper);
+  background: none;
+  background-clip: initial;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: var(--paper);
+  filter: none;
+}
+
+/* Mantiene exactamente las fuentes originales. */
+
+.hero__title,
+.hero__line,
+.hero__highlight,
+.section-title h2,
+.release__copy h3 {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-stretch: normal;
+}
+
+/* ==================================================
+   SUCIEDAD SOBRE EL HERO
+   La textura se coloca ENCIMA del texto, no dentro
+   del relleno de la fuente.
+================================================== */
+
+.hero__title {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero__title::after {
+  position: absolute;
+  inset: -5px -8px;
+  z-index: 4;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(
+      circle at 8% 18%,
+      rgb(0 0 0 / 72%) 0 0.8px,
+      transparent 1.5px
+    ),
+    radial-gradient(
+      circle at 23% 71%,
+      rgb(0 0 0 / 58%) 0 1px,
+      transparent 1.8px
+    ),
+    radial-gradient(
+      circle at 47% 32%,
+      rgb(0 0 0 / 62%) 0 0.9px,
+      transparent 1.7px
+    ),
+    radial-gradient(
+      circle at 68% 82%,
+      rgb(0 0 0 / 55%) 0 1px,
+      transparent 1.9px
+    ),
+    radial-gradient(
+      circle at 88% 41%,
+      rgb(0 0 0 / 68%) 0 0.8px,
+      transparent 1.6px
+    ),
+    url("/assets/textures/xerox-noise.svg") repeat;
+  background-size:
+    17px 19px,
+    23px 21px,
+    29px 25px,
+    21px 24px,
+    27px 22px,
+    105px 105px;
+  opacity: 0.3;
+  mix-blend-mode: multiply;
+}
+
+/*
+  La capa estÃ¡ sobre el tÃ­tulo completo.
+  En las zonas negras casi no se nota;
+  sobre las letras blancas y la franja roja
+  crea desgaste y puntos oscuros.
+*/
+
+.hero__line,
+.hero__highlight {
+  position: relative;
+  z-index: 2;
+}
+
+/* ==================================================
+   FRANJA ROJA DESGASTADA
+================================================== */
+
+.hero__highlight::before {
+  position: absolute;
+  inset: 5% -3% 1%;
+  z-index: -1;
+  content: "";
+  background:
+    radial-gradient(
+      circle at 7% 24%,
+      rgb(70 0 0 / 36%) 0 1px,
+      transparent 1.9px
+    ),
+    radial-gradient(
+      circle at 28% 68%,
+      rgb(95 0 0 / 28%) 0 1px,
+      transparent 1.8px
+    ),
+    radial-gradient(
+      circle at 54% 31%,
+      rgb(255 225 210 / 11%) 0 0.9px,
+      transparent 1.7px
+    ),
+    radial-gradient(
+      circle at 79% 72%,
+      rgb(65 0 0 / 33%) 0 1px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 93% 38%,
+      rgb(255 225 210 / 10%) 0 0.8px,
+      transparent 1.6px
+    ),
+    url("/assets/textures/xerox-noise.svg") repeat,
+    linear-gradient(
+      94deg,
+      #a91f22 0%,
+      var(--red) 43%,
+      #ca292c 76%,
+      #a81f22 100%
+    );
+  background-size:
+    17px 19px,
+    24px 22px,
+    29px 26px,
+    21px 23px,
+    27px 21px,
+    105px 105px,
+    100% 100%;
+  background-blend-mode:
+    multiply,
+    multiply,
+    screen,
+    multiply,
+    screen,
+    multiply,
+    normal;
+  clip-path: polygon(
+    1% 9%,
+    7% 4%,
+    19% 7%,
+    32% 2%,
+    47% 6%,
+    61% 1%,
+    77% 5%,
+    97% 0,
+    100% 82%,
+    94% 94%,
+    81% 91%,
+    68% 97%,
+    52% 93%,
+    36% 100%,
+    20% 95%,
+    4% 99%,
+    0 82%
+  );
+  box-shadow:
+    0 2px 0 rgb(70 0 0 / 24%),
+    0 7px 10px rgb(0 0 0 / 30%);
+}
+
+/* ==================================================
+   SUCIEDAD EN LOS DEMÃS TÃTULOS
+================================================== */
+
+.section-title {
+  isolation: isolate;
+}
+
+.section-title::before {
+  position: absolute;
+  inset: -5px -7px;
+  z-index: 3;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(
+      circle at 12% 31%,
+      rgb(0 0 0 / 64%) 0 0.8px,
+      transparent 1.6px
+    ),
+    radial-gradient(
+      circle at 44% 72%,
+      rgb(0 0 0 / 48%) 0 1px,
+      transparent 1.8px
+    ),
+    radial-gradient(
+      circle at 76% 27%,
+      rgb(0 0 0 / 58%) 0 0.9px,
+      transparent 1.7px
+    ),
+    url("/assets/textures/xerox-noise.svg") repeat;
+  background-size:
+    21px 20px,
+    27px 24px,
+    31px 27px,
+    110px 110px;
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+}
+
+.section-title h2 {
+  position: relative;
+  z-index: 2;
+}
+
+/* Menor intensidad en la secciÃ³n clara. */
+
+.release .section-title::before {
+  opacity: 0.12;
+}
+
+/* ==================================================
+   SUCIEDAD SUAVE EN NOMBRE DEL LANZAMIENTO
+================================================== */
+
+.release__copy h3 {
+  position: relative;
+  isolation: isolate;
+}
+
+.release__copy h3::after {
+  position: absolute;
+  inset: -4px;
+  z-index: 2;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(
+      circle at 16% 28%,
+      rgb(238 233 223 / 58%) 0 0.8px,
+      transparent 1.6px
+    ),
+    radial-gradient(
+      circle at 57% 71%,
+      rgb(238 233 223 / 46%) 0 1px,
+      transparent 1.8px
+    ),
+    radial-gradient(
+      circle at 86% 34%,
+      rgb(238 233 223 / 52%) 0 0.9px,
+      transparent 1.7px
+    );
+  background-size:
+    21px 20px,
+    27px 24px,
+    31px 27px;
+  opacity: 0.22;
+  mix-blend-mode: screen;
+}
+
+/* ==================================================
+   BOTONES
+   Mantienen la letra blanca original.
+================================================== */
+
+.button,
+.platform,
+.social-card {
+  color: var(--paper);
+  -webkit-text-fill-color: currentColor;
+}
+
+.hero__actions .button--primary {
+  background:
+    radial-gradient(
+      circle at 18% 34%,
+      rgb(95 0 0 / 28%) 0 1px,
+      transparent 1.8px
+    ),
+    radial-gradient(
+      circle at 76% 62%,
+      rgb(255 225 215 / 12%) 0 0.9px,
+      transparent 1.7px
+    ),
+    url("/assets/textures/xerox-noise.svg") repeat,
+    linear-gradient(
+      94deg,
+      var(--red-dark) 0%,
+      var(--red) 48%,
+      #c4272a 100%
+    );
+  background-size:
+    21px 21px,
+    27px 25px,
+    95px 95px,
+    100% 100%;
+  background-blend-mode:
+    multiply,
+    screen,
+    multiply,
+    normal;
+}
+
+/* ==================================================
+   RESPONSIVE DE LA TEXTURA
+================================================== */
+
+@media (max-width: 680px) {
+  .hero__title::after {
+    inset: -4px;
+    background-size:
+      15px 17px,
+      21px 19px,
+      25px 23px,
+      19px 21px,
+      23px 20px,
+      95px 95px;
+    opacity: 0.26;
+  }
+
+  .section-title::before {
+    opacity: 0.18;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero__title::after {
+    opacity: 0.22;
+  }
+}
+
