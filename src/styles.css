@@ -710,11 +710,8 @@ p {
   inset: -16px;
   z-index: -5;
   content: "";
-  background:
-    linear-gradient(90deg, rgb(0 0 0 / 97%) 0 35%, rgb(0 0 0 / 58%) 62%, rgb(0 0 0 / 32%) 100%),
-    url("/assets/images/hero-la-dosis.png") center / cover no-repeat;
-  filter: blur(11px) saturate(0.78) brightness(0.54);
-  opacity: 0.62;
+  background: #050505;
+  opacity: 1;
   transform: scale(1.02);
 }
 
@@ -728,27 +725,19 @@ p {
 }
 
 .hero__image {
-  inset: 0 0 0 auto;
+  inset: 0;
   z-index: -4;
-  width: min(72vw, 1040px);
+  width: 100%;
   height: 100%;
   max-width: none;
   object-fit: cover;
-  object-position: 58% 52%;
+  object-position: center 44%;
   filter:
-    contrast(1.16)
-    saturate(0.82)
-    brightness(0.76);
-  mix-blend-mode: screen;
-  -webkit-mask-image:
-    linear-gradient(90deg, transparent 0%, rgb(0 0 0 / 18%) 10%, #000 27%, #000 100%),
-    linear-gradient(180deg, transparent 0%, #000 10%, #000 88%, transparent 100%);
-  mask-image:
-    linear-gradient(90deg, transparent 0%, rgb(0 0 0 / 18%) 10%, #000 27%, #000 100%),
-    linear-gradient(180deg, transparent 0%, #000 10%, #000 88%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
-  opacity: 0.88;
+    contrast(1.08)
+    saturate(0.9)
+    brightness(0.82);
+  mix-blend-mode: normal;
+  opacity: 1;
 }
 
 .hero__shade {
@@ -757,11 +746,11 @@ p {
     linear-gradient(
       90deg,
       rgb(2 2 2 / 98%) 0%,
-      rgb(2 2 2 / 90%) 18%,
-      rgb(2 2 2 / 62%) 36%,
-      rgb(2 2 2 / 24%) 58%,
-      rgb(2 2 2 / 10%) 78%,
-      rgb(2 2 2 / 24%) 100%
+      rgb(2 2 2 / 78%) 18%,
+      rgb(2 2 2 / 40%) 38%,
+      rgb(2 2 2 / 8%) 62%,
+      transparent 82%,
+      rgb(2 2 2 / 12%) 100%
     ),
     linear-gradient(
       180deg,
@@ -3177,16 +3166,48 @@ h4,
   }
 
   .hero {
-    min-height: clamp(680px, 86svh, 820px);
+    min-height: 0;
+    display: block;
     padding:
-      calc(var(--header-height) + 46px)
+      calc(var(--header-height) + min(68svh, 640px) - 180px)
       0
       70px;
   }
 
+  .hero::before {
+    background: url("/assets/images/hero-la-dosis-1280.jpg") 70% 28% / cover no-repeat;
+    filter: blur(18px) saturate(0.72) brightness(0.35);
+    opacity: 0.72;
+  }
+
   .hero__image {
-    width: min(78vw, 900px);
-    object-position: 55% 52%;
+    inset: var(--header-height) 0 auto;
+    width: 100%;
+    height: min(68svh, 640px);
+    aspect-ratio: auto;
+    object-fit: cover;
+    object-position: 70% 28%;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, rgb(0 0 0 / 82%) 72%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 62%, rgb(0 0 0 / 82%) 72%, transparent 100%);
+  }
+
+  .hero__shade {
+    background:
+      linear-gradient(
+        90deg,
+        rgb(2 2 2 / 82%) 0%,
+        rgb(2 2 2 / 52%) 34%,
+        rgb(2 2 2 / 8%) 72%,
+        rgb(2 2 2 / 18%) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgb(2 2 2 / 18%) 0%,
+        transparent 39%,
+        rgb(2 2 2 / 42%) 60%,
+        rgb(2 2 2 / 92%) 78%,
+        #020202 100%
+      );
   }
 
   .hero__title {
@@ -3283,24 +3304,31 @@ h4,
   }
 
   .hero {
-    min-height: clamp(680px, 92svh, 840px);
-    align-items: flex-end;
+    min-height: 0;
+    display: block;
     padding:
-      calc(var(--header-height) + 40px)
+      calc(var(--header-height) + min(52svh, 520px) - 112px)
       0
-      64px;
+      54px;
+  }
+
+  .hero::before {
+    background: url("/assets/images/hero-la-dosis-768.jpg") 73% 24% / cover no-repeat;
+    filter: blur(16px) saturate(0.68) brightness(0.32);
+    opacity: 0.78;
   }
 
   .hero__image {
-    inset: 0;
+    inset: var(--header-height) 0 auto;
     width: 100%;
-    height: 100%;
+    height: min(52svh, 520px);
+    aspect-ratio: auto;
     max-width: 100%;
     object-fit: cover;
-    object-position: 58% center;
+    object-position: 73% 24%;
     mix-blend-mode: normal;
-    -webkit-mask-image: none;
-    mask-image: none;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 58%, rgb(0 0 0 / 78%) 72%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 58%, rgb(0 0 0 / 78%) 72%, transparent 100%);
     opacity: 1;
   }
 
@@ -3308,11 +3336,12 @@ h4,
     background:
       linear-gradient(
         180deg,
-        rgb(3 3 3 / 68%) 0%,
-        rgb(3 3 3 / 18%) 28%,
-        rgb(3 3 3 / 27%) 50%,
-        rgb(3 3 3 / 77%) 72%,
-        rgb(3 3 3 / 98%) 100%
+        rgb(3 3 3 / 16%) 0%,
+        transparent 34%,
+        rgb(3 3 3 / 28%) 48%,
+        rgb(3 3 3 / 78%) 63%,
+        #030303 76%,
+        #030303 100%
       );
   }
 
@@ -3323,7 +3352,7 @@ h4,
 
   .hero__actions {
     display: grid;
-    width: min(100%, 300px);
+    width: min(calc(100% - 84px), 300px);
     gap: 11px;
     margin-top: 24px;
   }
@@ -3468,8 +3497,9 @@ h4,
 
 @media (max-width: 420px) {
   .hero {
-    min-height: clamp(620px, 90svh, 740px);
-    padding-bottom: 56px;
+    min-height: 0;
+    padding-top: calc(var(--header-height) + min(52svh, 480px) - 100px);
+    padding-bottom: 48px;
   }
 
   .hero__title {
