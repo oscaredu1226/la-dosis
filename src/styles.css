@@ -36,11 +36,15 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-height) + 12px);
+  overflow-x: clip;
+  background: var(--black);
 }
 
 body {
+  width: 100vw;
+  width: 100dvw;
   margin: 0;
-  overflow-x: hidden;
+  overflow-x: clip;
   color: var(--paper);
   background: var(--black);
   font-family: var(--font-body);
@@ -86,6 +90,13 @@ body::before {
     0
   );
   transition: opacity 220ms ease;
+}
+
+app-root {
+  width: 100%;
+  min-width: 0;
+  display: block;
+  overflow-x: clip;
 }
 
 body::after {
@@ -182,18 +193,28 @@ p {
 
 .skip-link {
   position: fixed;
-  top: 10px;
-  left: 10px;
+  top: 0;
+  left: 0;
   z-index: 1200;
-  padding: 9px 13px;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
   color: var(--black);
   background: var(--paper);
   font-weight: 700;
-  transform: translateY(-160%);
 }
 
-.skip-link:focus {
-  transform: translateY(0);
+.skip-link:focus-visible {
+  top: 10px;
+  left: 10px;
+  width: auto;
+  height: auto;
+  padding: 9px 13px;
+  overflow: visible;
+  clip-path: none;
 }
 
 /* ==================================================
@@ -3112,6 +3133,17 @@ h4,
     --header-height: 70px;
   }
 
+  html {
+    scrollbar-width: none;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+
   .container,
   .header__inner {
     width: min(calc(100% - 32px), var(--container-width));
@@ -3298,6 +3330,10 @@ h4,
 ================================================== */
 
 @media (max-width: 680px) {
+  .skip-link {
+    display: none;
+  }
+
   .container,
   .header__inner {
     width: min(calc(100% - 24px), var(--container-width));
@@ -3307,13 +3343,13 @@ h4,
     min-height: 0;
     display: block;
     padding:
-      calc(var(--header-height) + min(52svh, 520px) - 112px)
+      calc(var(--header-height) + min(48svh, 440px) - 104px)
       0
       54px;
   }
 
   .hero::before {
-    background: url("/assets/images/hero-la-dosis-768.jpg") 73% 24% / cover no-repeat;
+    background: url("/assets/images/hero-la-dosis-768.jpg") 82% 24% / cover no-repeat;
     filter: blur(16px) saturate(0.68) brightness(0.32);
     opacity: 0.78;
   }
@@ -3321,11 +3357,11 @@ h4,
   .hero__image {
     inset: var(--header-height) 0 auto;
     width: 100%;
-    height: min(52svh, 520px);
+    height: min(48svh, 440px);
     aspect-ratio: auto;
     max-width: 100%;
     object-fit: cover;
-    object-position: 73% 24%;
+    object-position: 82% 24%;
     mix-blend-mode: normal;
     -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 58%, rgb(0 0 0 / 78%) 72%, transparent 100%);
     mask-image: linear-gradient(180deg, #000 0%, #000 58%, rgb(0 0 0 / 78%) 72%, transparent 100%);
@@ -3498,7 +3534,7 @@ h4,
 @media (max-width: 420px) {
   .hero {
     min-height: 0;
-    padding-top: calc(var(--header-height) + min(52svh, 480px) - 100px);
+    padding-top: calc(var(--header-height) + min(48svh, 420px) - 96px);
     padding-bottom: 48px;
   }
 
@@ -3560,6 +3596,61 @@ h4,
       minmax(0, 1fr)
       42px;
     padding: 8px;
+  }
+}
+
+/* Carrusel de fechas: una tarjeta completa y controles táctiles en móvil. */
+@media (max-width: 680px) {
+  #contenido app-shows-section .shows {
+    padding: 52px 0 64px;
+  }
+
+  #contenido app-shows-section .shows-carousel {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    padding: 0 0 58px;
+    overflow: hidden;
+  }
+
+  #contenido app-shows-section .shows__track {
+    width: 100%;
+    gap: 0;
+    padding: 0;
+    scroll-padding-inline: 0;
+    scrollbar-width: none;
+  }
+
+  #contenido app-shows-section .show-card {
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 100%;
+    padding: 16px;
+    box-shadow: none;
+    clip-path: none;
+  }
+
+  #contenido app-shows-section .show-card h3 {
+    font-size: clamp(2rem, 12vw, 2.8rem);
+  }
+
+  #contenido app-shows-section .shows-control {
+    top: auto;
+    bottom: 0;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    transform: none;
+  }
+
+  #contenido app-shows-section .shows-control--prev {
+    right: 54px;
+    left: auto;
+  }
+
+  #contenido app-shows-section .shows-control--next {
+    right: 0;
   }
 }
 

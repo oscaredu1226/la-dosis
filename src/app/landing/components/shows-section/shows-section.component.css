@@ -10,6 +10,7 @@
 
 .shows__layout {
   display: grid;
+  min-width: 0;
   gap: 20px;
 }
 
@@ -253,36 +254,5 @@
 
   .show-card__meta {
     grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 680px) {
-  .shows {
-    padding: 52px 0 64px;
-  }
-
-  .shows-carousel {
-    max-width: none;
-    padding-inline: 0;
-    overflow: visible;
-  }
-
-  .shows__track {
-    gap: 14px;
-    padding-inline: 2px;
-    scroll-padding-inline: 2px;
-  }
-
-  .show-card {
-    flex-basis: min(86vw, 360px);
-    padding: 15px;
-  }
-
-  .show-card h3 {
-    font-size: clamp(2rem, 12vw, 2.8rem);
-  }
-
-  .shows-control {
-    display: none;
   }
 }
