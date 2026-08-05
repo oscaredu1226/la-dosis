@@ -45,10 +45,22 @@ export class LandingContentStore {
     }
 
     try {
-      return {
+      const content = {
         ...DEFAULT_EDITABLE_CONTENT,
         ...(JSON.parse(storedValue) as Partial<EditableLandingContent>)
       };
+
+      if (
+        content.release.stickerUrl ===
+        'assets/images/ultimo_lanzamiento_img.png'
+      ) {
+        content.release = {
+          ...content.release,
+          stickerUrl: 'assets/images/ultimo_lanzamiento_img.webp'
+        };
+      }
+
+      return content;
     } catch {
       return DEFAULT_EDITABLE_CONTENT;
     }

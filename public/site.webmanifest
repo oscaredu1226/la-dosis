@@ -12,7 +12,7 @@
   "categories": ["music", "entertainment"],
   "icons": [
     {
-      "src": "assets/images/logo-la-dosis.png",
+      "src": "assets/images/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

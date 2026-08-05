@@ -97,7 +97,7 @@ export const LATEST_RELEASE: Release = {
   duration: '4:04',
   coverUrl: 'https://i.scdn.co/image/ab67616d0000e1a3ad5c5cfbf5a305f31ae00527',
   coverAlt: 'Portada de RECUERDO@S de La Dosis',
-  stickerUrl: 'assets/images/ultimo_lanzamiento_img.png',
+  stickerUrl: 'assets/images/ultimo_lanzamiento_img.webp',
   stickerAlt: 'Parche de La Dosis con calavera punk',
   spotifyUrl: 'https://open.spotify.com/intl-es/album/5kcvGdT6M9xSRTmZKOT0J6'
 };
@@ -106,7 +106,7 @@ export const BAND_MEMBERS: readonly BandMember[] = [
   {
     name: 'Nombre',
     role: 'Voz',
-    imageUrl: 'assets/images/integrante-01.jpg',
+    imageUrl: 'assets/images/galeria-02.jpg',
     imageAlt: 'Vocalista de La Dosis en vivo',
     instagramUrl: 'https://www.instagram.com/ladosis_oficial/',
     instagramLabel: 'Instagram del vocalista'
@@ -114,7 +114,7 @@ export const BAND_MEMBERS: readonly BandMember[] = [
   {
     name: 'Nombre',
     role: 'Guitarra',
-    imageUrl: 'assets/images/integrante-02.jpg',
+    imageUrl: 'assets/images/galeria-03.jpg',
     imageAlt: 'Guitarrista de La Dosis en vivo',
     instagramUrl: 'https://www.instagram.com/ladosis_oficial/',
     instagramLabel: 'Instagram del guitarrista'
@@ -122,7 +122,7 @@ export const BAND_MEMBERS: readonly BandMember[] = [
   {
     name: 'Nombre',
     role: 'Bajo',
-    imageUrl: 'assets/images/integrante-03.jpg',
+    imageUrl: 'assets/images/galeria-05.jpg',
     imageAlt: 'Bajista de La Dosis en vivo',
     instagramUrl: 'https://www.instagram.com/ladosis_oficial/',
     instagramLabel: 'Instagram del bajista'
@@ -130,7 +130,7 @@ export const BAND_MEMBERS: readonly BandMember[] = [
   {
     name: 'Nombre',
     role: 'Batería',
-    imageUrl: 'assets/images/integrante-04.jpg',
+    imageUrl: 'assets/images/galeria-06.jpg',
     imageAlt: 'Baterista de La Dosis en vivo',
     instagramUrl: 'https://www.instagram.com/ladosis_oficial/',
     instagramLabel: 'Instagram del baterista'
