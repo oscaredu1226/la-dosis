@@ -1,0 +1,58 @@
+<section class="videos section-dark" id="videos" data-section>
+  <div class="container">
+    <div class="section-title reveal">
+      <h2>Videos</h2>
+    </div>
+
+    <div class="videos__grid">
+      <div class="video-frame reveal">
+        <iframe
+          [title]="selectedVideo().title"
+          [src]="selectedVideoUrl()"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        ></iframe>
+      </div>
+
+      <aside class="video-sidebar reveal">
+        <p class="eyebrow eyebrow--red">Video destacado</p>
+
+        <h3>{{ selectedVideo().title }}</h3>
+
+        <a
+          class="button button--outline"
+          [href]="selectedVideo().youtubeUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Ver en YouTube
+        </a>
+
+        <h4>Más videos</h4>
+
+        <div class="video-thumbs" role="list" aria-label="Videos adicionales">
+          @for (video of videos; track video.id) {
+            <button
+              class="video-thumb"
+              [class.is-active]="video.id === selectedVideo().id"
+              type="button"
+              (click)="selectVideo(video)"
+            >
+              <img
+                [src]="video.thumbnailUrl"
+                [alt]="video.thumbnailAlt"
+                width="260"
+                height="160"
+                loading="lazy"
+              />
+              <span aria-hidden="true"></span>
+              {{ video.label }}
+            </button>
+          }
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
