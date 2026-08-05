@@ -1,0 +1,35 @@
+<footer class="footer">
+  <div class="container footer__inner">
+    <a class="brand" href="#inicio" aria-label="Volver al inicio">
+      <img
+        src="assets/images/logo-la-dosis.png"
+        alt="La Dosis"
+        width="420"
+        height="240"
+        loading="lazy"
+      />
+    </a>
+
+    <p class="footer__slogan">
+      <strong>Punk, melodía y resistencia.</strong>
+    </p>
+
+    <p class="footer__copyright">
+      © {{ currentYear }} La Dosis.<br />
+      Todos los derechos reservados.
+    </p>
+
+    <div class="footer-social" aria-label="Redes sociales">
+      @for (social of socials; track social.platform) {
+        <a
+          [href]="social.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          [attr.aria-label]="social.label"
+        >
+          <app-social-icon [name]="social.platform" />
+        </a>
+      }
+    </div>
+  </div>
+</footer>
