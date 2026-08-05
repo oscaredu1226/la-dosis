@@ -3,6 +3,8 @@ import { BodyLockService } from '../../../core/services/body-lock.service';
 import { LandingEffectsService } from '../../../core/services/landing-effects.service';
 import { GALLERY_IMAGES } from '../../data/landing-content';
 import { BandSectionComponent } from '../../components/band-section/band-section.component';
+import { CommunitySectionComponent } from '../../components/community-section/community-section.component';
+import { DownloadsSectionComponent } from '../../components/downloads-section/downloads-section.component';
 import { GalleryLightboxComponent } from '../../components/gallery-lightbox/gallery-lightbox.component';
 import { GallerySectionComponent } from '../../components/gallery-section/gallery-section.component';
 import { HeroSectionComponent } from '../../components/hero-section/hero-section.component';
@@ -12,11 +14,14 @@ import { SiteFooterComponent } from '../../components/site-footer/site-footer.co
 import { SiteHeaderComponent } from '../../components/site-header/site-header.component';
 import { SocialsSectionComponent } from '../../components/socials-section/socials-section.component';
 import { VideosSectionComponent } from '../../components/videos-section/videos-section.component';
+import { WhatsappFloatComponent } from '../../components/whatsapp-float/whatsapp-float.component';
 
 @Component({
   selector: 'app-landing-page',
   imports: [
     BandSectionComponent,
+    CommunitySectionComponent,
+    DownloadsSectionComponent,
     GalleryLightboxComponent,
     GallerySectionComponent,
     HeroSectionComponent,
@@ -25,7 +30,8 @@ import { VideosSectionComponent } from '../../components/videos-section/videos-s
     SiteFooterComponent,
     SiteHeaderComponent,
     SocialsSectionComponent,
-    VideosSectionComponent
+    VideosSectionComponent,
+    WhatsappFloatComponent
   ],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.css'
