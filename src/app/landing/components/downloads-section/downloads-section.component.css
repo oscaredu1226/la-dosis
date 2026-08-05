@@ -1,0 +1,192 @@
+:host {
+  display: contents;
+}
+
+.downloads {
+  position: relative;
+  padding: 78px 0 88px;
+  overflow: hidden;
+}
+
+.downloads::before {
+  position: absolute;
+  top: -16px;
+  left: 0;
+  z-index: 5;
+  width: 100%;
+  height: 22px;
+  pointer-events: none;
+  content: "";
+  background: var(--paper);
+  clip-path: polygon(
+    0 49%,
+    4% 56%,
+    9% 36%,
+    15% 63%,
+    23% 35%,
+    31% 58%,
+    40% 32%,
+    49% 61%,
+    58% 34%,
+    67% 59%,
+    76% 31%,
+    84% 61%,
+    93% 37%,
+    100% 52%,
+    100% 72%,
+    0 72%
+  );
+  opacity: 0.9;
+}
+
+.downloads > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.downloads__header {
+  max-width: 760px;
+  margin-bottom: 30px;
+}
+
+.downloads__header p {
+  max-width: 58ch;
+  margin: 0;
+  color: rgb(238 233 223 / 78%);
+  font-weight: 600;
+}
+
+.downloads__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.download-card {
+  position: relative;
+  min-height: 188px;
+  padding: 22px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  align-content: start;
+  gap: 18px;
+  color: var(--paper);
+  background:
+    radial-gradient(circle at 16% 24%, rgb(238 233 223 / 9%) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 82% 72%, rgb(231 50 51 / 15%) 0 1px, transparent 2px),
+    url("/assets/textures/xerox-noise.svg") repeat,
+    linear-gradient(110deg, #0b0b0b 0%, #121212 58%, #27080a 100%);
+  background-size:
+    22px 22px,
+    29px 29px,
+    120px 120px,
+    100% 100%;
+  background-blend-mode:
+    screen,
+    screen,
+    screen,
+    normal;
+  border: 2px solid rgb(238 233 223 / 18%);
+  box-shadow: 8px 8px 0 rgb(0 0 0 / 38%);
+  clip-path: polygon(0 4%, 96% 0, 100% 88%, 94% 100%, 3% 97%);
+  transition:
+    transform var(--fast),
+    border-color var(--fast),
+    box-shadow var(--fast);
+}
+
+.download-card:nth-child(even) {
+  transform: rotate(0.7deg);
+}
+
+.download-card:hover,
+.download-card:focus-visible {
+  border-color: rgb(231 50 51 / 76%);
+  box-shadow: 10px 10px 0 rgb(0 0 0 / 48%);
+  transform: translate(-2px, -3px) rotate(-0.5deg);
+}
+
+.download-card__number {
+  color: var(--red);
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 0.9;
+}
+
+.download-card__icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  color: var(--paper);
+  border: 2px solid rgb(238 233 223 / 42%);
+}
+
+.download-card__icon svg {
+  width: 23px;
+  height: 23px;
+}
+
+.download-card__icon path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.download-card__copy {
+  display: grid;
+  gap: 8px;
+  align-self: end;
+}
+
+.download-card__copy strong {
+  font-family: var(--font-condensed);
+  font-size: 1.65rem;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.download-card__copy span {
+  color: rgb(238 233 223 / 74%);
+  font-size: 0.95rem;
+}
+
+.download-card__action {
+  width: fit-content;
+  padding: 0.55rem 0.8rem;
+  color: var(--paper);
+  background:
+    url("/assets/textures/xerox-noise.svg") repeat,
+    var(--red);
+  background-size: 80px 80px, auto;
+  border: 1px solid var(--red-dark);
+  font-family: var(--font-condensed);
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+@media (max-width: 920px) {
+  .downloads__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .download-card {
+    min-height: 150px;
+  }
+}
+
+@media (max-width: 680px) {
+  .downloads {
+    padding: 60px 0 64px;
+  }
+
+  .download-card {
+    padding: 19px;
+  }
+}
