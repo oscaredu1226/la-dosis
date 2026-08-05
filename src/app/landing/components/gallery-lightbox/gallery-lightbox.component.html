@@ -1,0 +1,42 @@
+<div
+  class="lightbox"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Imagen ampliada de galería"
+  [hidden]="activeIndex() === null"
+  (click)="close()"
+>
+  <button
+    class="lightbox__close"
+    type="button"
+    aria-label="Cerrar galería"
+    (click)="close()"
+  >
+    ×
+  </button>
+
+  <button
+    class="lightbox__nav lightbox__nav--prev"
+    type="button"
+    aria-label="Imagen anterior"
+    (click)="$event.stopPropagation(); showImage(-1)"
+  >
+    ‹
+  </button>
+
+  <figure class="lightbox__figure" (click)="$event.stopPropagation()">
+    @if (activeImage(); as image) {
+      <img [src]="image.fullUrl" [alt]="image.alt" />
+      <figcaption>{{ image.alt }}</figcaption>
+    }
+  </figure>
+
+  <button
+    class="lightbox__nav lightbox__nav--next"
+    type="button"
+    aria-label="Imagen siguiente"
+    (click)="$event.stopPropagation(); showImage(1)"
+  >
+    ›
+  </button>
+</div>
