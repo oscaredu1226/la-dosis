@@ -1,0 +1,21 @@
+<section class="socials section-dark" id="redes" aria-labelledby="social-title">
+  <div class="container socials__layout">
+    <div class="section-title reveal">
+      <h2 id="social-title">Síguenos</h2>
+    </div>
+
+    <div class="social-grid">
+      @for (social of socials; track social.platform) {
+        <a
+          class="social-card social-card--{{ social.platform }} reveal"
+          [href]="social.url"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <app-social-icon [name]="social.platform" />
+          {{ social.label }}
+        </a>
+      }
+    </div>
+  </div>
+</section>
