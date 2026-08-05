@@ -33,6 +33,12 @@ export interface Release {
   readonly spotifyUrl: string;
 }
 
+export interface DownloadLink {
+  readonly title: string;
+  readonly description: string;
+  readonly url: string;
+}
+
 export interface BandMember {
   readonly name: string;
   readonly role: string;
