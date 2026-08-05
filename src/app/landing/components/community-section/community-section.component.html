@@ -1,0 +1,90 @@
+<section id="foro" class="community section-dark" data-section>
+  <div class="container community__layout">
+    <div class="community__intro reveal">
+      <div class="section-title">
+        <h2>Foro de <span>la banda</span></h2>
+      </div>
+
+      <p>
+        Deja tu mensaje para La Dosis. La banda puede responder los comentarios
+        desde el panel de administración.
+      </p>
+    </div>
+
+    <form class="community-form reveal" (ngSubmit)="submitComment()">
+      <label>
+        <span>Tu nombre</span>
+        <input
+          name="authorName"
+          type="text"
+          maxlength="60"
+          required
+          [(ngModel)]="authorName"
+        />
+      </label>
+
+      <label>
+        <span>Comentario</span>
+        <textarea
+          name="message"
+          rows="4"
+          maxlength="420"
+          required
+          [(ngModel)]="message"
+        ></textarea>
+      </label>
+
+      <button class="button button--primary" type="submit" [disabled]="isSubmitting()">
+        Publicar comentario
+      </button>
+    </form>
+
+    <div class="community-feed reveal" aria-live="polite">
+      @if (comments().length) {
+        @for (comment of comments(); track comment.id) {
+          <article class="community-comment">
+            <header>
+              <strong>{{ comment.authorName }}</strong>
+              <time [dateTime]="comment.createdAt">
+                {{ comment.createdAt | date: 'dd MMM yyyy, HH:mm' }}
+              </time>
+            </header>
+
+            <p>{{ comment.message }}</p>
+
+            @if (comment.replies.length) {
+              <div class="community-replies">
+                @for (reply of comment.replies; track reply.id) {
+                  <div class="community-reply">
+                    <strong>{{ reply.authorName }}</strong>
+                    <p>{{ reply.message }}</p>
+                  </div>
+                }
+              </div>
+            }
+
+            @if (isAdminMode()) {
+              <form class="reply-form" (ngSubmit)="submitReply(comment.id)">
+                <textarea
+                  name="reply-{{ comment.id }}"
+                  rows="2"
+                  maxlength="320"
+                  placeholder="Responder como La Dosis"
+                  [(ngModel)]="replyDrafts[comment.id]"
+                ></textarea>
+
+                <button class="button button--outline" type="submit">
+                  Responder
+                </button>
+              </form>
+            }
+          </article>
+        }
+      } @else {
+        <p class="community-empty">
+          Sé el primero en dejar un mensaje para la banda.
+        </p>
+      }
+    </div>
+  </div>
+</section>
