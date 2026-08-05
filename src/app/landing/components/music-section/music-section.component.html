@@ -1,0 +1,37 @@
+<section id="musica" class="music section-dark" data-section>
+  <div class="container">
+    <div class="section-title section-title--music reveal">
+      <h2>Escucha nuestra <span>música</span></h2>
+    </div>
+
+    <div class="music__grid">
+      <div class="spotify-frame reveal">
+        <iframe
+          src="https://open.spotify.com/embed/artist/26XGOxgf1xzkmfcqjEoZNh?utm_source=generator&theme=0"
+          height="352"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+        ></iframe>
+      </div>
+
+      <div class="music__links reveal">
+        <p>
+          Escucha nuestras canciones en Spotify y síguenos para no perderte
+          ningún lanzamiento.
+        </p>
+
+        @for (platform of platforms; track platform.platform) {
+          <a
+            [class]="platform.className"
+            [href]="platform.url"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <app-social-icon [name]="platform.platform" />
+            <span>{{ platform.label }}</span>
+          </a>
+        }
+      </div>
+    </div>
+  </div>
+</section>
