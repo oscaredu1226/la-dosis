@@ -1,0 +1,132 @@
+<section id="fechas" class="shows section-dark" data-section>
+  <div class="container shows__layout">
+    <div class="shows__intro reveal">
+      <p class="eyebrow eyebrow--red">En vivo</p>
+
+      <div class="section-title">
+        <h2>Próximo <span>pogo</span></h2>
+      </div>
+
+      <p>
+        Próximas presentaciones, flyers oficiales y anuncios de fechas de La
+        Dosis.
+      </p>
+    </div>
+
+    <div class="shows-carousel reveal" aria-label="Carrusel de próximas presentaciones">
+      <button
+        class="shows-control shows-control--prev"
+        type="button"
+        aria-label="Ver fecha anterior"
+        (click)="scrollShows(-1)"
+      >
+        ‹
+      </button>
+
+      <div #showsTrack class="shows__track">
+        @for (show of shows(); track show.title) {
+          <article class="show-card">
+            <button
+              class="show-card__flyer"
+              type="button"
+              (click)="openFlyer(show)"
+              [attr.aria-label]="'Ver flyer de ' + show.title"
+            >
+              <img
+                [src]="show.imageUrl"
+                [alt]="show.imageAlt"
+                width="720"
+                height="920"
+                loading="lazy"
+              />
+            </button>
+
+            <div class="show-card__copy">
+              <p class="show-card__status">{{ show.status }}</p>
+              <h3>{{ show.title }}</h3>
+
+              <dl class="show-card__meta">
+                <div>
+                  <dt>Fecha</dt>
+                  <dd>{{ show.dateLabel }}</dd>
+                </div>
+                <div>
+                  <dt>Hora</dt>
+                  <dd>{{ show.timeLabel }}</dd>
+                </div>
+                <div>
+                  <dt>Lugar</dt>
+                  <dd>{{ show.venue }}</dd>
+                </div>
+                <div>
+                  <dt>Ciudad</dt>
+                  <dd>{{ show.city }}</dd>
+                </div>
+              </dl>
+
+              <p>{{ show.details }}</p>
+
+              <div class="show-card__actions">
+                <button
+                  class="button button--outline"
+                  type="button"
+                  (click)="openFlyer(show)"
+                >
+                  Ver flyer
+                </button>
+
+                @if (show.url) {
+                  <a
+                    class="button button--primary"
+                    [href]="show.url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Ver evento
+                  </a>
+                }
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+
+      <button
+        class="shows-control shows-control--next"
+        type="button"
+        aria-label="Ver siguiente fecha"
+        (click)="scrollShows(1)"
+      >
+        ›
+      </button>
+    </div>
+  </div>
+</section>
+
+<div
+  class="flyer-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Flyer ampliado"
+  [hidden]="activeFlyer() === null"
+  (click)="closeFlyer()"
+>
+  <button
+    class="flyer-modal__close"
+    type="button"
+    aria-label="Cerrar flyer"
+    (click)="closeFlyer()"
+  >
+    ×
+  </button>
+
+  @if (activeFlyer(); as flyer) {
+    <figure (click)="$event.stopPropagation()">
+      <img [src]="flyer.imageUrl" [alt]="flyer.imageAlt" />
+      <figcaption>
+        <strong>{{ flyer.title }}</strong>
+        <span>{{ flyer.dateLabel }} · {{ flyer.venue }} · {{ flyer.city }}</span>
+      </figcaption>
+    </figure>
+  }
+</div>

@@ -5,6 +5,7 @@ import {
   NavItem,
   PlatformLink,
   Release,
+  ShowEvent,
   SocialLink,
   VideoItem
 } from '../domain/landing.models';
@@ -15,6 +16,7 @@ export const NAV_ITEMS: readonly NavItem[] = [
   { label: 'Descargas', fragment: 'descargas' },
   { label: 'La banda', fragment: 'banda' },
   { label: 'Videos', fragment: 'videos' },
+  { label: 'Fechas', fragment: 'fechas' },
   { label: 'Galería', fragment: 'galeria' },
   { label: 'Foro', fragment: 'foro' }
 ];
@@ -162,6 +164,42 @@ export const VIDEOS: readonly VideoItem[] = [
     thumbnailAlt: 'Miniatura de short de La Dosis',
     embedUrl: 'https://www.youtube.com/embed/AkSEaxP15f8',
     youtubeUrl: 'https://youtube.com/shorts/AkSEaxP15f8'
+  }
+];
+
+export const SHOW_EVENTS: readonly ShowEvent[] = [
+  {
+    title: 'Próxima presentación',
+    dateLabel: 'Fecha por anunciar',
+    timeLabel: 'Hora por confirmar',
+    venue: 'Lugar por confirmar',
+    city: 'Lima, Perú',
+    status: 'Próximamente',
+    imageUrl: 'assets/images/galeria-05.jpg',
+    imageAlt: 'Placeholder de flyer para futuras presentaciones de La Dosis',
+    details: 'Flyer oficial e información completa próximamente.'
+  },
+  {
+    title: 'Show en vivo',
+    dateLabel: 'Fecha por anunciar',
+    timeLabel: 'Hora por confirmar',
+    venue: 'Escenario por confirmar',
+    city: 'Lima, Perú',
+    status: 'Por anunciar',
+    imageUrl: 'assets/images/galeria-02.jpg',
+    imageAlt: 'Placeholder de flyer para show en vivo de La Dosis',
+    details: 'Nueva presentación en preparación. Pronto se publicará el flyer final.'
+  },
+  {
+    title: 'Festival punk',
+    dateLabel: 'Fecha por anunciar',
+    timeLabel: 'Hora por confirmar',
+    venue: 'Local por confirmar',
+    city: 'Lima, Perú',
+    status: 'En agenda',
+    imageUrl: 'assets/images/galeria-06.jpg',
+    imageAlt: 'Placeholder de flyer para festival punk de La Dosis',
+    details: 'Espacio reservado para futuras fechas, preventa o información del evento.'
   }
 ];
 

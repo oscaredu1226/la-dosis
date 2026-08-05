@@ -21,22 +21,22 @@ export interface PlatformLink extends SocialLink {
 }
 
 export interface Release {
-  readonly title: string;
-  readonly eyebrow: string;
-  readonly description: string;
-  readonly date: string;
-  readonly duration: string;
-  readonly coverUrl: string;
-  readonly coverAlt: string;
-  readonly stickerUrl: string;
-  readonly stickerAlt: string;
-  readonly spotifyUrl: string;
+  title: string;
+  eyebrow: string;
+  description: string;
+  date: string;
+  duration: string;
+  coverUrl: string;
+  coverAlt: string;
+  stickerUrl: string;
+  stickerAlt: string;
+  spotifyUrl: string;
 }
 
 export interface DownloadLink {
-  readonly title: string;
-  readonly description: string;
-  readonly url: string;
+  title: string;
+  description: string;
+  url: string;
 }
 
 export interface BandMember {
@@ -49,16 +49,38 @@ export interface BandMember {
 }
 
 export interface VideoItem {
-  readonly id: string;
-  readonly label: string;
-  readonly title: string;
-  readonly thumbnailUrl: string;
-  readonly thumbnailAlt: string;
-  readonly embedUrl: string;
-  readonly youtubeUrl: string;
+  id: string;
+  label: string;
+  title: string;
+  thumbnailUrl: string;
+  thumbnailAlt: string;
+  embedUrl: string;
+  youtubeUrl: string;
+  mediaType?: 'youtube' | 'video';
+}
+
+export interface ShowEvent {
+  title: string;
+  dateLabel: string;
+  timeLabel: string;
+  venue: string;
+  city: string;
+  status: string;
+  imageUrl: string;
+  imageAlt: string;
+  details: string;
+  url?: string;
 }
 
 export interface GalleryImage {
-  readonly fullUrl: string;
-  readonly alt: string;
+  fullUrl: string;
+  alt: string;
+}
+
+export interface EditableLandingContent {
+  downloads: DownloadLink[];
+  release: Release;
+  videos: VideoItem[];
+  shows: ShowEvent[];
+  gallery: GalleryImage[];
 }

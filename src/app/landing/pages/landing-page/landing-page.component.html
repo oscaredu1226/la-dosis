@@ -9,6 +9,7 @@
   <app-release-section />
   <app-band-section />
   <app-videos-section />
+  <app-shows-section />
   <app-gallery-section (imageSelected)="openLightbox($event)" />
   <app-socials-section />
   <app-community-section />
@@ -19,7 +20,7 @@
 <app-whatsapp-float />
 
 <app-gallery-lightbox
-  [images]="galleryImages"
+  [images]="galleryImages()"
   [activeIndex]="activeLightboxIndex()"
   (closed)="closeLightbox()"
   (activeIndexChange)="changeLightboxIndex($event)"

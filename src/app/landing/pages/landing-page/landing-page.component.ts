@@ -1,7 +1,7 @@
-import { Component, HostListener, afterNextRender, inject, signal } from '@angular/core';
+import { Component, HostListener, afterNextRender, computed, inject, signal } from '@angular/core';
 import { BodyLockService } from '../../../core/services/body-lock.service';
 import { LandingEffectsService } from '../../../core/services/landing-effects.service';
-import { GALLERY_IMAGES } from '../../data/landing-content';
+import { LandingContentStore } from '../../application/landing-content.store';
 import { BandSectionComponent } from '../../components/band-section/band-section.component';
 import { CommunitySectionComponent } from '../../components/community-section/community-section.component';
 import { DownloadsSectionComponent } from '../../components/downloads-section/downloads-section.component';
@@ -12,6 +12,7 @@ import { MusicSectionComponent } from '../../components/music-section/music-sect
 import { ReleaseSectionComponent } from '../../components/release-section/release-section.component';
 import { SiteFooterComponent } from '../../components/site-footer/site-footer.component';
 import { SiteHeaderComponent } from '../../components/site-header/site-header.component';
+import { ShowsSectionComponent } from '../../components/shows-section/shows-section.component';
 import { SocialsSectionComponent } from '../../components/socials-section/socials-section.component';
 import { VideosSectionComponent } from '../../components/videos-section/videos-section.component';
 import { WhatsappFloatComponent } from '../../components/whatsapp-float/whatsapp-float.component';
@@ -29,6 +30,7 @@ import { WhatsappFloatComponent } from '../../components/whatsapp-float/whatsapp
     ReleaseSectionComponent,
     SiteFooterComponent,
     SiteHeaderComponent,
+    ShowsSectionComponent,
     SocialsSectionComponent,
     VideosSectionComponent,
     WhatsappFloatComponent
@@ -39,8 +41,9 @@ import { WhatsappFloatComponent } from '../../components/whatsapp-float/whatsapp
 export class LandingPageComponent {
   private readonly effects = inject(LandingEffectsService);
   private readonly bodyLock = inject(BodyLockService);
+  private readonly contentStore = inject(LandingContentStore);
 
-  protected readonly galleryImages = GALLERY_IMAGES;
+  protected readonly galleryImages = computed(() => this.contentStore.content().gallery);
   protected readonly activeLightboxIndex = signal<number | null>(null);
 
   constructor() {
@@ -90,7 +93,8 @@ export class LandingPageComponent {
     }
 
     this.activeLightboxIndex.set(
-      (activeIndex + direction + this.galleryImages.length) % this.galleryImages.length
+      (activeIndex + direction + this.galleryImages().length) %
+        this.galleryImages().length
     );
   }
 }
